@@ -62,7 +62,6 @@ const navigationList = [
 
 <style lang="scss" scoped>
 .v-card {
-  position: fixed;
   height: 100%;
   .v-layout {
     height: 100%;
