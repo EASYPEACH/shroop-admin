@@ -6,6 +6,7 @@ import HomeView from "@/views/HomeView.vue";
 import AccountView from "@/views/AccountView.vue";
 import MediateView from "@/views/MediateView.vue";
 import ProductView from "@/views/ProductView.vue";
+import RegistProductView from "@/views/RegistProductView.vue";
 import ReportView from "@/views/ReportView.vue";
 
 const routes = [
@@ -37,6 +38,16 @@ const routes = [
         path: "/product",
         name: "Product",
         component: ProductView,
+      },
+      {
+        path: "/regist",
+        name: "ProductRegist",
+        component: RegistProductView,
+      },
+      {
+        path: "/edit/:id(\\d+)",
+        name: "ProductEdit",
+        component: RegistProductView,
       },
       {
         path: "/report",

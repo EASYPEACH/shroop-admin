@@ -1,6 +1,11 @@
 <template>
   <section>
     <common-title title="상품관리" />
+    <manage-button
+      button-text="상품등록"
+      class="regist"
+      :handleClick="() => $router.push('/regist')"
+    />
     <v-text-field
       name="search"
       append-inner-icon="mdi-magnify"
@@ -12,17 +17,23 @@
       :loading="loading"
       class="elevation-1"
     >
-      <template v-slot:[`item.id`]="{ item }">
+      <template v-slot:[`item.number`]="{ item }">
         {{ item.index + 1 }}
       </template>
       <template v-slot:[`item.details`]="{ item }">
         <manage-button button-text="상세보기" />
       </template>
       <template v-slot:[`item.delete`]="{ item }">
-        <manage-button button-text="삭제" />
+        <manage-button
+          button-text="삭제"
+          :handle-click="() => handleClickDeleteRequest(item.columns.id)"
+        />
       </template>
       <template v-slot:[`item.update`]="{ item }">
-        <manage-button button-text="수정" />
+        <manage-button
+          button-text="수정"
+          :handle-click="() => $router.push(`/edit/${item.columns.id}`)"
+        />
       </template>
     </v-data-table>
   </section>
@@ -30,13 +41,19 @@
 
 <script setup>
 import { onBeforeMount, ref } from "vue";
-import { getApi } from "@/api/modules";
+import { getApi, deleteApi } from "@/api/modules";
 import CommonTitle from "@/components/CommonTitle.vue";
 import ManageButton from "@/components/ManageButton.vue";
 
 const headers = ref([
   {
     title: "번호",
+    align: "start",
+    sortable: true,
+    key: "number",
+  },
+  {
+    title: "ID",
     align: "start",
     sortable: true,
     key: "id",
@@ -69,6 +86,12 @@ onBeforeMount(async () => {
     console.error(err);
   }
 });
+
+const handleClickDeleteRequest = async (id) => {};
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.regist {
+  margin: 30px 0;
+}
+</style>
