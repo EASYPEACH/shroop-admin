@@ -42,7 +42,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { postApi } from "@/api/modules";
-import CommonTitle from "@/components/CommonTitle.vue";
+import CommonTitle from "@/components/Title/CommonTitle.vue";
 import CustomTextInput from "@/components/Form/CustomTextInput.vue";
 import PasswordInput from "@/components/Form/PasswordInput.vue";
 

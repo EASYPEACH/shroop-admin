@@ -21,7 +21,10 @@
         {{ item.index + 1 }}
       </template>
       <template v-slot:[`item.details`]="{ item }">
-        <manage-button button-text="상세보기" />
+        <manage-button
+          button-text="상세보기"
+          :handle-click="() => $router.push(`/product/${item.columns.id}`)"
+        />
       </template>
       <template v-slot:[`item.delete`]="{ item }">
         <manage-button
@@ -42,8 +45,8 @@
 <script setup>
 import { onBeforeMount, ref } from "vue";
 import { getApi, deleteApi } from "@/api/modules";
-import CommonTitle from "@/components/CommonTitle.vue";
-import ManageButton from "@/components/ManageButton.vue";
+import CommonTitle from "@/components/Title/CommonTitle.vue";
+import ManageButton from "@/components/Button/ManageButton.vue";
 
 const headers = ref([
   {

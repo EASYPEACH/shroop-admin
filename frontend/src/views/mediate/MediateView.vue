@@ -28,8 +28,8 @@
 <script setup>
 import { onBeforeMount, ref } from "vue";
 import { getApi } from "@/api/modules";
-import CommonTitle from "@/components/CommonTitle.vue";
-import ManageButton from "@/components/ManageButton.vue";
+import CommonTitle from "@/components/Title/CommonTitle.vue";
+import ManageButton from "@/components/Button/ManageButton.vue";
 
 const headers = ref([
   {

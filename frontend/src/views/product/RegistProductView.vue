@@ -1,5 +1,6 @@
 <template>
   <section>
+    <back-button />
     <CommonTitle :title="isRegister ? '상품등록' : '상품수정'" />
     <v-form
       v-model="isValid"
@@ -153,10 +154,11 @@ import { PRODUCT_GRADE, PRODUCT_GRADE_EN } from "@/consts/productGrade.js";
 import { multipartPostApi, multipartPatchApi, getApi } from "@/api/modules";
 
 import CustomTextInput from "@/components/Form/CustomTextInput.vue";
-import CommonTitle from "@/components/CommonTitle.vue";
-import ProductTitle from "@/components/ProductTitle.vue";
+import CommonTitle from "@/components/Title/CommonTitle.vue";
+import ProductTitle from "@/components/Title/ProductTitle.vue";
 import ImageAttach from "@/components/ImageAttach.vue";
 import CustomTextArea from "@/components/Form/CustomTextArea.vue";
+import BackButton from "@/components/Button/BackButton.vue";
 
 const router = useRouter();
 const route = useRoute();
