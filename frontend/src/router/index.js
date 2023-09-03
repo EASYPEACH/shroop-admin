@@ -3,11 +3,11 @@ import { createRouter, createWebHistory } from "vue-router";
 import Default from "@/layouts/default/Default.vue";
 import Login from "@/views/LoginView.vue";
 import HomeView from "@/views/HomeView.vue";
-import AccountView from "@/views/AccountView.vue";
-import MediateView from "@/views/MediateView.vue";
-import ProductView from "@/views/ProductView.vue";
-import RegistProductView from "@/views/RegistProductView.vue";
-import ReportView from "@/views/ReportView.vue";
+import AccountView from "@/views/account/AccountView.vue";
+import MediateView from "@/views/mediate/MediateView.vue";
+import ProductView from "@/views/product/ProductView.vue";
+import RegistProductView from "@/views/product/RegistProductView.vue";
+import ReportView from "@/views/report/ReportView.vue";
 
 const routes = [
   {
