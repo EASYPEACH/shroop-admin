@@ -5,7 +5,7 @@ module.exports = {
   },
   extends: [
     "plugin:vue/base",
-    "plugin:vue/vue3-essential",
+    "plugin:vuetify/base",
     "eslint:recommended",
     "prettier",
   ],
