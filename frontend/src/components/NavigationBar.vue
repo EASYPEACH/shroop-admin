@@ -1,10 +1,20 @@
 <template>
   <v-card>
     <v-layout>
-      <v-navigation-drawer v-model="drawer" permanent @click="rail = false">
+      <v-navigation-drawer
+        v-model="drawer"
+        :rail="rail"
+        permanent
+        @click="rail = false"
+      >
         <li>
           <img src="@/assets/logo-black.png" />
           <p>슈룹 관리자</p>
+          <v-btn
+            variant="text"
+            icon="mdi-chevron-left"
+            @click.stop="rail = !rail"
+          ></v-btn>
         </li>
 
         <v-divider></v-divider>
@@ -30,7 +40,7 @@ import { ref } from "vue";
 import { useRoute } from "vue-router";
 
 const drawer = ref(true);
-const route = useRoute();
+const rail = ref(false);
 const navigationList = [
   {
     title: "Home",
@@ -71,10 +81,11 @@ const navigationList = [
     }
     li {
       display: flex;
-      gap: 10px;
+      gap: 20px;
       padding: 20px 10px;
       align-items: center;
       cursor: pointer;
+      white-space: nowrap;
 
       &:nth-child(1) {
         img {
