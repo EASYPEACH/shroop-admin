@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <navigation-bar />
+    <navigation-bar v-if="route.path.split('/')[1] !== 'login'" />
     <section>
       <router-view />
     </section>
@@ -9,6 +9,9 @@
 
 <script setup>
 import NavigationBar from "@/components/NavigationBar.vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 </script>
 
 <style lang="scss" scoped>
