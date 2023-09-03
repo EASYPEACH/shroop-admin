@@ -1,6 +1,7 @@
 // Composables
 import { createRouter, createWebHistory } from "vue-router";
 import Default from "@/layouts/default/Default.vue";
+import Login from "@/views/LoginView.vue";
 import HomeView from "@/views/HomeView.vue";
 import AccountView from "@/views/AccountView.vue";
 import MediateView from "@/views/MediateView.vue";
@@ -16,6 +17,11 @@ const routes = [
         path: "",
         name: "Home",
         component: HomeView,
+      },
+      {
+        path: "/login",
+        name: "Login",
+        component: Login,
       },
       {
         path: "/account",
