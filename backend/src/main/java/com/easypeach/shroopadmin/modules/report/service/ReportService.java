@@ -1,9 +1,49 @@
 package com.easypeach.shroopadmin.modules.report.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.easypeach.shroopadmin.modules.report.domain.Report;
+import com.easypeach.shroopadmin.modules.report.domain.ReportRepository;
+import com.easypeach.shroopadmin.modules.report.domain.ReportStatus;
+import com.easypeach.shroopadmin.modules.report.dto.response.ReportResponse;
+
+import lombok.RequiredArgsConstructor;
+
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 @Service
 public class ReportService {
+
+	private final ReportRepository reportRepository;
+
+	public List<ReportResponse> findAll(final Pageable pageable) {
+
+		List<Report> list = reportRepository.findAllFetchJoin(pageable);
+
+		return list.stream().map(ReportResponse::new).collect(Collectors.toList());
+	}
+
+	public ReportResponse findById(final Long reportId) {
+		Report report = reportRepository.getByIdFetchJoin(reportId);
+		return new ReportResponse(report);
+	}
+
+	@Transactional
+	public void deleteById(final Long reportId) {
+		reportRepository.deleteById(reportId);
+	}
+
+	@Transactional
+	public void updateStatus(final Long reportId, final ReportStatus reportStatus) {
+		Report report = reportRepository.getById(reportId);
+		report.updateStatus(reportStatus);
+
+	}
 
 }
 
