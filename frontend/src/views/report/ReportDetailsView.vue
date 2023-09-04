@@ -39,22 +39,10 @@
         <p>{{ reportDetails.reportReason }}</p>
       </li>
     </ul>
-    <ul class="reportImgList">
-      <li
-        v-for="img in reportDetails.mediateImgList"
-        :key="reportDetails.productId + img"
-      >
-        <img :src="img" alt="신고이미지" @click="() => handleClickImg(img)" />
-      </li>
-    </ul>
+
     <div class="complete-btn">
       <manage-button button-text="처리완료" />
     </div>
-    <image-modal
-      :dialog="imgDialog"
-      :img-src="imgSrc"
-      @handle-close-modal="imgDialog = !imgDialog"
-    />
   </section>
 </template>
 
@@ -71,16 +59,7 @@ const reportDetails = ref({
   productId: 1,
   reporterId: 2,
   sellerId: 1,
-  mediateImgList: [
-    "https://shroop-s3.s3.ap-northeast-2.amazonaws.com/logo-color.png",
-    "https://shroop-s3.s3.ap-northeast-2.amazonaws.com/logo-color.png",
-    "https://shroop-s3.s3.ap-northeast-2.amazonaws.com/logo-color.png",
-    "https://shroop-s3.s3.ap-northeast-2.amazonaws.com/logo-color.png",
-    "https://shroop-s3.s3.ap-northeast-2.amazonaws.com/logo-color.png",
-    "https://shroop-s3.s3.ap-northeast-2.amazonaws.com/logo-color.png",
-    "https://shroop-s3.s3.ap-northeast-2.amazonaws.com/logo-color.png",
-    "https://shroop-s3.s3.ap-northeast-2.amazonaws.com/logo-color.png",
-  ],
+
   reportReason:
     "사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.",
 });
@@ -119,15 +98,6 @@ ul {
       padding: 0;
       font-size: 20px;
     }
-  }
-}
-.reportImgList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  img {
-    width: 200px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
   }
 }
 

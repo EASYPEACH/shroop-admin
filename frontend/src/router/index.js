@@ -7,6 +7,7 @@ import AccountView from "@/views/account/AccountView.vue";
 import UserDetailsView from "@/views/account/UserDetailsView.vue";
 import UserEditView from "@/views/account/UserEditView.vue";
 import MediateView from "@/views/mediate/MediateView.vue";
+import MediateDetailsView from "@/views/mediate/MediateDetailsView.vue";
 import ProductView from "@/views/product/ProductView.vue";
 import ProductDetailsView from "@/views/product/ProductDetailsView.vue";
 import RegistProductView from "@/views/product/RegistProductView.vue";
@@ -47,6 +48,11 @@ const routes = [
         path: "/mediate",
         name: "Mediate",
         component: MediateView,
+      },
+      {
+        path: "/mediate/:id(\\d+)",
+        name: "MediateDetails",
+        component: MediateDetailsView,
       },
       {
         path: "/product",
