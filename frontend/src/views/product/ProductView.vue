@@ -15,6 +15,7 @@
       :headers="headers"
       :items="products"
       :loading="loading"
+      @update:page="(value) => console.log(value)"
       class="elevation-1"
     >
       <template v-slot:[`item.number`]="{ item }">
@@ -56,7 +57,7 @@ const headers = ref([
     key: "number",
   },
   {
-    title: "ID",
+    title: "UID",
     align: "start",
     sortable: true,
     key: "id",

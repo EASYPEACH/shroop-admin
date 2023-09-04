@@ -4,6 +4,8 @@ import Default from "@/layouts/default/Default.vue";
 import Login from "@/views/LoginView.vue";
 import HomeView from "@/views/HomeView.vue";
 import AccountView from "@/views/account/AccountView.vue";
+import UserDetailsView from "@/views/account/UserDetailsView.vue";
+import UserEditView from "@/views/account/UserEditView.vue";
 import MediateView from "@/views/mediate/MediateView.vue";
 import ProductView from "@/views/product/ProductView.vue";
 import ProductDetailsView from "@/views/product/ProductDetailsView.vue";
@@ -29,6 +31,16 @@ const routes = [
         path: "/account",
         name: "Account",
         component: AccountView,
+      },
+      {
+        path: "/user/:id(\\d+)",
+        name: "UserDetails",
+        component: UserDetailsView,
+      },
+      {
+        path: "/user/edit/:id(\\d+)",
+        name: "UserEdit",
+        component: UserEditView,
       },
       {
         path: "/mediate",

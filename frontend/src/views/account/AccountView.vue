@@ -12,11 +12,20 @@
       :loading="loading"
       class="elevation-1"
     >
+      <template v-slot:[`item.number`]="{ item }">
+        {{ item.index + 1 }}
+      </template>
       <template v-slot:[`item.details`]="{ item }">
-        <manage-button button-text="상세보기" />
+        <manage-button
+          button-text="상세보기"
+          @click="() => $router.push(`/user/${item.columns.id}`)"
+        />
       </template>
       <template v-slot:[`item.update`]="{ item }">
-        <manage-button button-text="수정" />
+        <manage-button
+          button-text="수정"
+          @click="() => $router.push(`/user/edit/${item.columns.id}`)"
+        />
       </template>
       <template v-slot:[`item.delete`]="{ item }">
         <manage-button button-text="삭제" />
@@ -36,7 +45,19 @@ const headers = ref([
     title: "번호",
     align: "start",
     sortable: true,
+    key: "number",
+  },
+  {
+    title: "UID",
+    align: "start",
+    sortable: true,
     key: "id",
+  },
+  {
+    title: "Login ID",
+    align: "start",
+    sortable: true,
+    key: "loginId",
   },
   {
     title: "닉네임",
@@ -52,11 +73,13 @@ const headers = ref([
 const users = ref([
   {
     id: 1,
+    loginId: "김바보11",
     nickName: "김바보",
     createDate: "2023-09-01",
   },
   {
     id: 2,
+    loginId: "김바보22",
     nickName: "김바보",
     createDate: "2023-09-01",
   },
