@@ -27,7 +27,7 @@
       <li>
         <h2>상품 PID</h2>
         <manage-button
-          :button-text="reportDetails.sellerId"
+          :button-text="reportDetails.productId"
           :handle-click="
             () => $router.push(`/product/${reportDetails.productId}`)
           "
@@ -41,35 +41,78 @@
     </ul>
 
     <div class="complete-btn">
-      <manage-button button-text="처리완료" />
+      <manage-button
+        v-if="!isConfirm"
+        button-text="처리완료"
+        :handle-click="handleUpdateReportStatus"
+      />
+      <manage-button
+        v-else
+        button-text="처리취소"
+        :handle-click="handleUpdateReportStatus"
+      />
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onBeforeMount } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { getApi, patchApi } from "@/api/modules";
 import BackButton from "@/components/Button/BackButton.vue";
 import CommonTitle from "@/components/Title/CommonTitle.vue";
 import ManageButton from "@/components/Button/ManageButton.vue";
 import ImageModal from "@/components/ImageModal.vue";
 
-const reportDetails = ref({
-  id: 1,
-  title: "신고합니다",
-  productId: 1,
-  reporterId: 2,
-  sellerId: 1,
+const route = useRoute();
+const router = useRouter();
 
-  reportReason:
-    "사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.사기꾼이에요.",
+const reportDetails = ref({
+  id: 0,
+  title: "",
+  productId: 0,
+  reporterId: 0,
+  sellerId: 0,
+  reportReason: "",
 });
 const imgDialog = ref(false);
 const imgSrc = ref("");
+const isConfirm = ref(false);
 
 const handleClickImg = (img) => {
   imgDialog.value = !imgDialog.value;
   imgSrc.value = img;
 };
+
+const handleUpdateReportStatus = () => {
+  try {
+    const response = patchApi({
+      url: `/api/reports/${route.params.id}`,
+      data: {
+        reportStatus: isConfirm.value ? "REPORT_REQUEST" : "REPORT_CONFIRM",
+      },
+    });
+    router.push(`/report`);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+onBeforeMount(async () => {
+  try {
+    const response = await getApi({
+      url: `/api/reports/${route.params.id}`,
+    });
+    reportDetails.value.id = response.id;
+    reportDetails.value.title = response.title;
+    reportDetails.value.reporterId = response.memberId;
+    reportDetails.value.reportReason = response.content;
+    reportDetails.value.productId = response.productId;
+    isConfirm.value = response.status === "REPORT_REQUEST" ? false : true;
+  } catch (error) {
+    console.error(error);
+  }
+});
 </script>
 
 <style lang="scss" scoped>
