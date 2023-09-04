@@ -4,6 +4,7 @@ import { VDataTable } from "vuetify/labs/VDataTable";
 
 import { createVuetify } from "vuetify";
 import "@/styles/main.scss";
+import "@/styles/global.style.css";
 
 const lightTheme = {
   dark: false,

@@ -11,6 +11,7 @@ import ProductView from "@/views/product/ProductView.vue";
 import ProductDetailsView from "@/views/product/ProductDetailsView.vue";
 import RegistProductView from "@/views/product/RegistProductView.vue";
 import ReportView from "@/views/report/ReportView.vue";
+import ReportDetailsView from "@/views/report/ReportDetailsView.vue";
 
 const routes = [
   {
@@ -71,6 +72,11 @@ const routes = [
         path: "/report",
         name: "Report",
         component: ReportView,
+      },
+      {
+        path: "/report/:id(\\d+)",
+        name: "ReportDetails",
+        component: ReportDetailsView,
       },
     ],
   },

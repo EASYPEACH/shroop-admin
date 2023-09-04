@@ -12,8 +12,23 @@
       :loading="false"
       class="elevation-1"
     >
+      <template v-slot:[`item.number`]="{ item }">
+        {{ item.index + 1 }}
+      </template>
+      <template v-slot:[`item.id`]="{ item }">
+        <v-btn
+          variant="text"
+          color="info"
+          class="text-decoration-underline"
+          @click="() => $router.push(`/product/${item.columns.id}`)"
+          >Pid{{ item.columns.id }}</v-btn
+        >
+      </template>
       <template v-slot:[`item.details`]="{ item }">
-        <manage-button button-text="상세보기" />
+        <manage-button
+          button-text="상세보기"
+          @click="() => $router.push(`/report/${item.columns.id}`)"
+        />
       </template>
       <template v-slot:[`item.delete`]="{ item }">
         <manage-button button-text="삭제" />
@@ -34,6 +49,12 @@ import ManageButton from "@/components/Button/ManageButton.vue";
 const headers = ref([
   {
     title: "번호",
+    align: "start",
+    sortable: true,
+    key: "number",
+  },
+  {
+    title: "상품ID",
     align: "start",
     sortable: true,
     key: "id",
