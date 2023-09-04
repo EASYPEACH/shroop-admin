@@ -65,6 +65,12 @@ const headers = ref([
     sortable: true,
     key: "nickName",
   },
+  {
+    title: "휴대전화번호",
+    align: "start",
+    sortable: true,
+    key: "phoneNumber",
+  },
   { title: "등록날짜", align: "start", sortable: true, key: "createDate" },
   { title: "상세보기", align: "start", key: "details" },
   { title: "수정", align: "start", key: "update" },
@@ -75,12 +81,14 @@ const users = ref([
     id: 1,
     loginId: "김바보11",
     nickName: "김바보",
+    phoneNumber: "01012341234",
     createDate: "2023-09-01",
   },
   {
     id: 2,
     loginId: "김바보22",
     nickName: "김바보",
+    phoneNumber: "01012341234",
     createDate: "2023-09-01",
   },
 ]);

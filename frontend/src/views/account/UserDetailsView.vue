@@ -1,7 +1,7 @@
 <template>
   <section>
     <back-button />
-    <h2>사용자 정보</h2>
+    <common-title title="사용자 정보" />
     <section class="profileSection">
       <img :src="user.profileImg" alt="profileImg" />
       <ul class="userInfo">
@@ -18,13 +18,17 @@
           <p>{{ user.nickName }}</p>
         </li>
         <li>
+          <h3>PhoneNumber</h3>
+          <p>{{ user.phoneNumber }}</p>
+        </li>
+        <li>
           <h3>등록일자</h3>
           <p>{{ user.createDate }}</p>
         </li>
       </ul>
     </section>
     <v-divider></v-divider>
-    <h2>사용자 로그</h2>
+    <common-title title="사용자 로그" />
   </section>
 </template>
 
@@ -32,6 +36,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import BackButton from "@/components/Button/BackButton.vue";
+import CommonTitle from "@/components/Title/CommonTitle.vue";
 
 const router = useRouter();
 const user = ref({
@@ -40,6 +45,7 @@ const user = ref({
   nickName: "김바보",
   profileImg:
     "https://shroop-s3.s3.ap-northeast-2.amazonaws.com/logo-color.png",
+  phoneNumber: "01012341234",
   createDate: "2023-09-01",
 });
 </script>
