@@ -1,5 +1,10 @@
 <template>
-  <v-btn variant="text" @click="() => $router.back()">
+  <v-btn
+    height="auto"
+    width="fit-content"
+    variant="text"
+    @click="() => $router.back()"
+  >
     <v-icon icon="mdi-chevron-left" />
     back
   </v-btn>
@@ -10,7 +15,6 @@
 <style lang="scss" scoped>
 .v-btn {
   padding: 0;
-  width: fit-content;
   font-size: 25px;
   justify-content: flex-start;
 }
