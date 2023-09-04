@@ -5,6 +5,27 @@ import { VDataTable } from "vuetify/labs/VDataTable";
 import { createVuetify } from "vuetify";
 import "@/styles/main.scss";
 import "@/styles/global.style.css";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Line } from "vue-chartjs";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+);
 
 const lightTheme = {
   dark: false,
