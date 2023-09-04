@@ -57,7 +57,7 @@
 import { ref } from "vue";
 import { changeImageToData } from "@/utils";
 import BackButton from "@/components/Button/BackButton.vue";
-import basicProfile from "@/assets/image/basicProfile.png";
+import basicProfile from "@/assets/basicProfile.jpeg";
 import CustomTextInput from "@/components/Form/CustomTextInput.vue";
 
 const user = ref({
