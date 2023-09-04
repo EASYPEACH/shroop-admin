@@ -22,6 +22,18 @@
           <p>{{ user.phoneNumber }}</p>
         </li>
         <li>
+          <h3>등급</h3>
+          <p>골프우산</p>
+        </li>
+        <li>
+          <h3>점수</h3>
+          <p>80점</p>
+        </li>
+        <li>
+          <h3>신고받은횟수</h3>
+          <p>0</p>
+        </li>
+        <li>
           <h3>등록일자</h3>
           <p>{{ user.createDate }}</p>
         </li>
@@ -71,10 +83,17 @@ const user = ref({
       display: flex;
       gap: 20px;
       align-items: center;
+      margin: 10px 0;
+      & + li {
+        border-top: 1px solid rgba(0, 0, 0, 0.2);
+      }
+      h3 {
+        font-weight: 600;
+        width: 150px;
+      }
     }
   }
 }
-
 h2 {
   margin: 20px 0;
 }

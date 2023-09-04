@@ -57,7 +57,7 @@ const headers = ref([
     key: "number",
   },
   {
-    title: "UID",
+    title: "PID",
     align: "start",
     sortable: true,
     key: "id",

@@ -54,7 +54,7 @@ const headers = ref([
     key: "number",
   },
   {
-    title: "상품ID",
+    title: "PID",
     align: "start",
     sortable: true,
     key: "id",
