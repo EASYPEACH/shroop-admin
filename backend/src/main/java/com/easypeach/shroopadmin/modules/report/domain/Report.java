@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,14 +34,12 @@ public class Report {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne
-	// @JoinColumn(name = "member_id", nullable = false)
-	@JoinColumn(name = "member_id") // TODO: 임시로 NULL 허용
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
 
-	@ManyToOne
-	// @JoinColumn(name = "product_id", nullable = false)
-	@JoinColumn(name = "product_id") // TODO: 임시로 NULL 허용
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
 
 	@Column(length = 255, nullable = false)
@@ -62,7 +61,7 @@ public class Report {
 
 	public static Report createReport(
 		final Member member,
-		// final Product product,
+		final Product product,
 		final String title,
 		final String content,
 		final boolean isMediate,
@@ -70,7 +69,7 @@ public class Report {
 	) {
 		Report report = new Report();
 		report.member = member;
-		// report.product = product;
+		report.product = product;
 		report.title = title;
 		report.content = content;
 		report.isMediate = isMediate;
