@@ -78,6 +78,10 @@ public class Report {
 		return report;
 	}
 
+	public void updateStatus(final ReportStatus reportStatus) {
+		this.status = reportStatus;
+	}
+
 	public static Report forTestCodeReport() {
 		return new Report();
 	}

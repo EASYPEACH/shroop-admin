@@ -9,11 +9,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.easypeach.shroopadmin.modules.global.response.BasicResponse;
+import com.easypeach.shroopadmin.modules.report.dto.request.ReportStatusRequest;
 import com.easypeach.shroopadmin.modules.report.dto.response.ReportResponse;
 import com.easypeach.shroopadmin.modules.report.service.ReportService;
 
@@ -45,6 +48,13 @@ public class ReportController {
 	public ResponseEntity<BasicResponse> deleteById(final @PathVariable Long reportId) {
 		reportService.deleteById(reportId);
 		return ResponseEntity.status(HttpStatus.OK).body(new BasicResponse("신고가 삭제되었습니다."));
+	}
+
+	@PatchMapping("/{reportId}")
+	public ResponseEntity<BasicResponse> updateStatus(final @PathVariable Long reportId,
+		final @RequestBody ReportStatusRequest reportStatusRequest) {
+		reportService.updateStatus(reportId, reportStatusRequest.getReportStatus());
+		return ResponseEntity.status(HttpStatus.OK).body(new BasicResponse("신고 상태 변경이 완료되었습니다."));
 	}
 
 }

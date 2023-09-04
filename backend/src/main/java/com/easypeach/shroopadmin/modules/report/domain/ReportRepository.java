@@ -27,6 +27,10 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
 	)
 	Optional<Report> findByIdFetchJoin(Long reportId);
 
+	default Report getById(final Long reportId) {
+		return findById(reportId).orElseThrow(() -> new ReportNotExistException("신고가 존재하지 않습니다."));
+	}
+
 	default Report getByIdFetchJoin(final Long reportId) {
 		return findByIdFetchJoin(reportId).orElseThrow(() -> new ReportNotExistException("신고가 존재하지 않습니다."));
 	}
