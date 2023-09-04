@@ -30,5 +30,9 @@ public class ReportService {
 		return new ReportResponse(report);
 	}
 
+	public void deleteById(final Long reportId) {
+		reportRepository.deleteById(reportId);
+	}
+
 }
 
