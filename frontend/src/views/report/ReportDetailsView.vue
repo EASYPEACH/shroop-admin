@@ -47,6 +47,9 @@
         <img :src="img" alt="신고이미지" @click="() => handleClickImg(img)" />
       </li>
     </ul>
+    <div class="complete-btn">
+      <manage-button button-text="처리완료" />
+    </div>
     <image-modal
       :dialog="imgDialog"
       :img-src="imgSrc"
@@ -91,6 +94,9 @@ const handleClickImg = (img) => {
 </script>
 
 <style lang="scss" scoped>
+section {
+  padding-bottom: 100px;
+}
 ul {
   li {
     display: flex;
@@ -123,5 +129,10 @@ ul {
     width: 200px;
     border: 1px solid rgba(0, 0, 0, 0.2);
   }
+}
+
+.complete-btn {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>
