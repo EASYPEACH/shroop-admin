@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.easypeach.shroopadmin.modules.report.domain.Report;
 import com.easypeach.shroopadmin.modules.report.domain.ReportStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,7 @@ public class ReportResponse {
 
 	private ReportStatus status;
 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	private LocalDateTime createDate;
 
 	public ReportResponse(Report report) {
