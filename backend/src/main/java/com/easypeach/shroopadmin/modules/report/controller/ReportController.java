@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,6 +30,12 @@ public class ReportController {
 	public ResponseEntity<List<ReportResponse>> findAll(
 		final @PageableDefault(size = 10, sort = "createDate", direction = Sort.Direction.DESC) Pageable pageable) {
 		List<ReportResponse> response = reportService.findAll(pageable);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
+
+	@GetMapping("/{reportId}")
+	public ResponseEntity<ReportResponse> findById(final @PathVariable Long reportId) {
+		ReportResponse response = reportService.findById(reportId);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 

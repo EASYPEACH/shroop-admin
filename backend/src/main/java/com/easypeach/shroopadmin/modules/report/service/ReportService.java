@@ -18,11 +18,16 @@ public class ReportService {
 
 	private final ReportRepository reportRepository;
 
-	public List<ReportResponse> findAll(Pageable pageable) {
+	public List<ReportResponse> findAll(final Pageable pageable) {
 
 		List<Report> list = reportRepository.findAllFetchJoin(pageable);
 
 		return list.stream().map(ReportResponse::new).collect(Collectors.toList());
+	}
+
+	public ReportResponse findById(final Long reportId) {
+		Report report = reportRepository.getByIdFetchJoin(reportId);
+		return new ReportResponse(report);
 	}
 
 }
