@@ -105,9 +105,10 @@ onBeforeMount(async () => {
     });
     reportDetails.value.id = response.id;
     reportDetails.value.title = response.title;
-    reportDetails.value.reporterId = response.memberId;
+    reportDetails.value.reporterId = response.reporterId;
     reportDetails.value.reportReason = response.content;
     reportDetails.value.productId = response.productId;
+    reportDetails.value.sellerId = response.sellerId;
     isConfirm.value = response.status === "REPORT_REQUEST" ? false : true;
   } catch (error) {
     console.error(error);
