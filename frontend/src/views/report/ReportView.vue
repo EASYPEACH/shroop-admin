@@ -70,7 +70,7 @@ const headers = ref([
     key: "id",
   },
   {
-    title: "제목",
+    title: "제목11",
     align: "start",
     sortable: true,
     key: "title",
