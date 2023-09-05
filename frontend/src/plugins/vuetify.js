@@ -1,6 +1,6 @@
 import "@mdi/font/css/materialdesignicons.css";
 import "vuetify/styles";
-import { VDataTable } from "vuetify/labs/VDataTable";
+import { VDataTable, VDataTableServer } from "vuetify/labs/VDataTable";
 
 import { createVuetify } from "vuetify";
 import "@/styles/main.scss";
@@ -49,6 +49,7 @@ const lightTheme = {
 export default createVuetify({
   components: {
     VDataTable,
+    VDataTableServer,
   },
   theme: {
     defaultTheme: "lightTheme",

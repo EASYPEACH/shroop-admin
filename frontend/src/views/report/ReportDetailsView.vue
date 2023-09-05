@@ -11,14 +11,14 @@
       <li>
         <h2>판매자 UID</h2>
         <manage-button
-          :button-text="reportDetails.sellerId"
+          :button-text="reportDetails.sellerId.toString()"
           :handle-click="() => $router.push(`/user/${reportDetails.sellerId}`)"
         />
       </li>
       <li>
         <h2>신고자 UID</h2>
         <manage-button
-          :button-text="reportDetails.reporterId"
+          :button-text="reportDetails.reporterId.toString()"
           :handle-click="
             () => $router.push(`/user/${reportDetails.reporterId}`)
           "
@@ -27,7 +27,7 @@
       <li>
         <h2>상품 PID</h2>
         <manage-button
-          :button-text="reportDetails.productId"
+          :button-text="reportDetails.productId.toString()"
           :handle-click="
             () => $router.push(`/product/${reportDetails.productId}`)
           "
