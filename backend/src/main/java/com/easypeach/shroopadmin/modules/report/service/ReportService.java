@@ -54,7 +54,7 @@ public class ReportService {
 
 	@Transactional
 	public void updateStatus(final Long reportId, final ReportStatus reportStatus) {
-		Report report = reportRepository.getById(reportId);
+		Report report = reportRepository.getByIdFetchJoin(reportId);
 		report.updateStatus(reportStatus);
 
 	}
