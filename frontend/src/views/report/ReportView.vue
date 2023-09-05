@@ -57,7 +57,7 @@
       </template>
       <template v-slot:[`item.complete`]="{ item }">
         <v-checkbox-btn
-          v-model="item.columns.complete"
+          v-model="updateReports[item.index].complete"
           disabled
         ></v-checkbox-btn>
       </template>
@@ -66,7 +66,7 @@
 </template>
 
 <script setup>
-import { onBeforeMount, ref, watch } from "vue";
+import { onBeforeMount, ref, watch, onMounted } from "vue";
 import { getApi, deleteApi } from "@/api/modules";
 import CommonTitle from "@/components/Title/CommonTitle.vue";
 import ManageButton from "@/components/Button/ManageButton.vue";
@@ -113,7 +113,7 @@ const headers = ref([
 const reports = ref([]);
 const updateReports = ref([]);
 const perPageSize = ref(10);
-const totalSize = ref();
+const totalSize = ref(0);
 
 const handleDeleteReport = (id) => {
   try {
@@ -153,14 +153,9 @@ const handleSort = (sort) => {
   }
 };
 
-onBeforeMount(async () => {
+onMounted(async () => {
+  console.log("before");
   await handleGetReports();
-});
-
-router.afterEach(async () => {
-  if (route.path === "/report") {
-    await handleGetReports();
-  }
 });
 
 watch([perPageSize, currentPage, orderBy], async () => {
