@@ -1,6 +1,7 @@
 package com.easypeach.shroopadmin.modules.report.dto.response;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.easypeach.shroopadmin.modules.report.domain.Report;
 import com.easypeach.shroopadmin.modules.report.domain.ReportStatus;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public class ReportResponse {
+public class MediateResponse {
 
 	private Long id;
 
@@ -40,7 +41,26 @@ public class ReportResponse {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	private LocalDateTime createDate;
 
-	public ReportResponse(Report report) {
+	private List<ReportImgResponse> imgList;
+
+	public MediateResponse(final Report report, final List<ReportImgResponse> imgList) {
+		this.id = report.getId();
+		this.reporterId = report.getMember().getId();
+		this.reporterLoginId = report.getMember().getLoginId();
+		this.sellerId = report.getProduct().getSeller().getId();
+		this.productId = report.getProduct().getId();
+		this.productTitle = report.getProduct().getTitle();
+		this.categoryId = report.getProduct().getCategory().getId();
+		this.categoryName = report.getProduct().getCategory().getName();
+		this.title = report.getTitle();
+		this.content = report.getContent();
+		this.isMediate = report.isMediate();
+		this.status = report.getStatus();
+		this.createDate = report.getCreateDate();
+		this.imgList = imgList;
+	}
+
+	public MediateResponse(final Report report) {
 		this.id = report.getId();
 		this.reporterId = report.getMember().getId();
 		this.reporterLoginId = report.getMember().getLoginId();
@@ -55,5 +75,4 @@ public class ReportResponse {
 		this.status = report.getStatus();
 		this.createDate = report.getCreateDate();
 	}
-
 }
