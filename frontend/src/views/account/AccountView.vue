@@ -78,21 +78,32 @@ const headers = ref([
 ]);
 const users = ref([
   {
-    id: 1,
-    loginId: "김바보11",
-    nickName: "김바보",
-    phoneNumber: "01012341234",
-    createDate: "2023-09-01",
-  },
-  {
-    id: 2,
-    loginId: "김바보22",
-    nickName: "김바보",
-    phoneNumber: "01012341234",
-    createDate: "2023-09-01",
+    id: "",
+    loginId: "",
+    nickName: "",
+    phoneNumber: "",
+    createDate: "",
   },
 ]);
 const loading = ref(false);
+const currentPage = ref(1);
+const handleMemberList = async () => {
+  loading.value = true;
+  try {
+    const page = await getApi({
+      url: `/api/members?page=${currentPage.value - 1}&size=15&sort=id,desc `,
+    });
+    console.log(page.content);
+    users.value = page.content;
+    loading.value = false;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+onBeforeMount(async () => {
+  handleMemberList();
+});
 </script>
 
 <style lang="scss" scoped></style>

@@ -51,17 +51,17 @@ public class MemberController {
 	}
 
 	@GetMapping("/{memberId}/log")
-	public ResponseEntity<List<UserLogDto>> getMemberLog(@PathVariable Long memberId){
+	public ResponseEntity<Page<UserLogDto>> getMemberLog(@PathVariable Long memberId,Pageable pageable){
 
-		List<UserLog> userLogs = userLogRepository.findLogsByMemberId(memberId);
+		Page<UserLog> userLogs = userLogRepository.findLogsByMemberId(memberId,pageable);
 
-		List<UserLogDto> userLogDtos = userLogs.stream().map(u -> new UserLogDto(
+		Page<UserLogDto> userLogDtos = userLogs.map(u -> new UserLogDto(
 			u.getMemberId(),
 			u.getLog(),
 			u.getParamName(),
 			u.getParamValue(),
 			u.getCreatedTime()
-		)).collect(Collectors.toList());
+		));
 
 		return ResponseEntity.ok(userLogDtos);
 	}

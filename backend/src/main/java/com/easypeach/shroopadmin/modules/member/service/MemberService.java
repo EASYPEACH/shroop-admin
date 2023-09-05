@@ -1,6 +1,5 @@
 package com.easypeach.shroopadmin.modules.member.service;
 
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,19 +21,25 @@ public class MemberService {
 	private final MemberRepository memberRepository;
 	private final BlackMemberRepository blackMemberRepository;
 
-	public Page<MemberInfo> getMemberList(Pageable pageable){
+	public Page<MemberInfo> getMemberList(Pageable pageable) {
 		Page<Member> members = memberRepository.findAll(pageable);
 		//Page로 되어 있는 엔티티 dto로 변경
-		Page<MemberInfo> dtoMembers = members.map(m -> new MemberInfo(m.getId(),
-			m.getLoginId(),m.getNickname(),m.getPhoneNumber(),m.getCreateDate()));
+		Page<MemberInfo> dtoMembers = members.map(m -> new MemberInfo(
+			m.getId(),
+			m.getProfileImg(),
+			m.getLoginId(),
+			m.getNickname(),
+			m.getPhoneNumber(),
+			m.getCreateDate()));
 
 		return dtoMembers;
 	}
 
-	public MemberInfo getMemberInfo(Long memberId){
+	public MemberInfo getMemberInfo(Long memberId) {
 		Member member = memberRepository.findById(memberId).orElseThrow(IllegalStateException::new);
 		MemberInfo memberInfo = new MemberInfo(
 			member.getId(),
+			member.getProfileImg(),
 			member.getLoginId(),
 			member.getNickname(),
 			member.getPhoneNumber(),
@@ -44,15 +49,15 @@ public class MemberService {
 		return memberInfo;
 	}
 
-	public Member update(Long memberId, MemberInfo memberInfo){
+	public Member update(Long memberId, MemberInfo memberInfo) {
 		Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
 		member.updateLoginId(memberInfo.getLoginId());
-		member.updateNickname(memberInfo.getNickname());
+		member.updateNickname(memberInfo.getNickName());
 		return member;
 	}
 
-	public BlackMember delete(Long memberId){
-		Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException :: new);
+	public BlackMember delete(Long memberId) {
+		Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
 
 		BlackMember blackMember = BlackMember.from(member);
 		blackMemberRepository.save(blackMember);
@@ -60,8 +65,8 @@ public class MemberService {
 		return blackMember;
 	}
 
-	public Member removeRole(Long memberId){
-		Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException :: new);
+	public Member removeRole(Long memberId) {
+		Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
 		member.updateRole(Role.ROLE_NOT_AUTH_USER);
 		return member;
 	}
