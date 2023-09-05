@@ -132,7 +132,6 @@ const handleGetReports = async () => {
         currentPage.value - 1
       }&sort=${orderBy.value}&searchWord=${search.value || ""}`,
     });
-    console.log(response);
     totalSize.value = response.totalCount;
     reports.value = response.responseList;
     updateReports.value = reports.value.map((report) => {
@@ -154,7 +153,6 @@ const handleSort = (sort) => {
 };
 
 onMounted(async () => {
-  console.log("before");
   await handleGetReports();
 });
 
