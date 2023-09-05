@@ -66,11 +66,11 @@
 </template>
 
 <script setup>
-import { onBeforeMount, ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { getApi, deleteApi } from "@/api/modules";
+import { useRouter, useRoute } from "vue-router";
 import CommonTitle from "@/components/Title/CommonTitle.vue";
 import ManageButton from "@/components/Button/ManageButton.vue";
-import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
 const route = useRoute();
@@ -80,13 +80,13 @@ const orderBy = ref("createDate,desc");
 
 const headers = ref([
   {
-    title: "번호",
+    title: "No.",
     align: "start",
     sortable: false,
     key: "number",
   },
   {
-    title: "PID",
+    title: "ID",
     align: "start",
     sortable: true,
     key: "id",
