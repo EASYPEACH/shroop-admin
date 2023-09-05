@@ -64,28 +64,4 @@ public class Transaction {
 	@Column(name = "create_date")
 	@CreatedDate
 	private LocalDateTime createDate;
-
-	public static Transaction createTransaction(final Member buyer, final Member seller, final Product product,
-		final TransactionStatus status, final String buyerName, final String buyerPhoneNumber,
-		final String buyerLocation
-	) {
-		Transaction transaction = new Transaction();
-		transaction.buyer = buyer;
-		transaction.seller = seller;
-		transaction.product = product;
-		transaction.status = status;
-		transaction.buyerName = buyerName;
-		transaction.buyerPhoneNumber = buyerPhoneNumber;
-		transaction.buyerLocation = buyerLocation;
-
-		return transaction;
-	}
-
-	public void updateStatus(TransactionStatus transactionStatus) {
-		this.status = transactionStatus;
-	}
-
-	public void updateDelivery(Delivery delivery) {
-		this.delivery = delivery;
-	}
 }

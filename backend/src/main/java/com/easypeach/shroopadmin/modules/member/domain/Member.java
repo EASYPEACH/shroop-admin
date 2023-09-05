@@ -40,6 +40,8 @@ public class Member {
 	@Column(name = "phone_number", length = 50, nullable = false, unique = true)
 	private String phoneNumber;
 
+	private String profileImg;
+
 	@Column(nullable = false)
 	@Enumerated(value = EnumType.STRING)
 	private Role role;
@@ -62,30 +64,8 @@ public class Member {
 	@Column(nullable = false, name = "check_agree")
 	private boolean checkAgree;
 
-	public static Member createMember(String loginId,
-		String password,
-		String nickname,
-		String phoneNumber,
-		Role role,
-		Long point) {
-		Member member = new Member();
-		member.loginId = loginId;
-		member.password = password;
-		member.nickname = nickname;
-		member.phoneNumber = phoneNumber;
-		member.role = role;
-		member.point = point;
-		member.checkAgree = true;
-		return member;
-	}
-
-	public void updatePoint(Long updatedPoint) {
-		this.point = updatedPoint;
-	}
-
-	public void updateRole(Role role) {
-		this.role = role;
-	}
+	@Column
+	private String account;
 
 }
 
