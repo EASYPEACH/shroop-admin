@@ -15,9 +15,11 @@ public class ReportResponse {
 
 	private Long id;
 
-	private Long memberId;
+	private Long reporterId;
 
-	private String loginId;
+	private String reporterLoginId;
+
+	private Long sellerId;
 
 	private Long productId;
 
@@ -40,8 +42,9 @@ public class ReportResponse {
 
 	public ReportResponse(Report report) {
 		this.id = report.getId();
-		this.memberId = report.getMember().getId();
-		this.loginId = report.getMember().getLoginId();
+		this.reporterId = report.getMember().getId();
+		this.reporterLoginId = report.getMember().getLoginId();
+		this.sellerId = report.getProduct().getSeller().getId();
 		this.productId = report.getProduct().getId();
 		this.productTitle = report.getProduct().getTitle();
 		this.categoryId = report.getProduct().getCategory().getId();

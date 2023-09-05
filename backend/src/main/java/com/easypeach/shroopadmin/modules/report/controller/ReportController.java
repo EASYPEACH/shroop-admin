@@ -1,7 +1,5 @@
 package com.easypeach.shroopadmin.modules.report.controller;
 
-import java.util.List;
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -17,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.easypeach.shroopadmin.modules.global.response.BasicResponse;
 import com.easypeach.shroopadmin.modules.report.dto.request.ReportStatusRequest;
+import com.easypeach.shroopadmin.modules.report.dto.request.SearchReportRequest;
+import com.easypeach.shroopadmin.modules.report.dto.response.PageReportResponse;
 import com.easypeach.shroopadmin.modules.report.dto.response.ReportResponse;
 import com.easypeach.shroopadmin.modules.report.service.ReportService;
 
@@ -32,9 +32,10 @@ public class ReportController {
 	private final ReportService reportService;
 
 	@GetMapping
-	public ResponseEntity<List<ReportResponse>> findAll(
+	public ResponseEntity<PageReportResponse> searchFindAll(
+		final SearchReportRequest searchReportRequest,
 		final @PageableDefault(size = 10, sort = "createDate", direction = Sort.Direction.DESC) Pageable pageable) {
-		List<ReportResponse> response = reportService.findAll(pageable);
+		PageReportResponse response = reportService.searchFindAll(searchReportRequest, pageable);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 

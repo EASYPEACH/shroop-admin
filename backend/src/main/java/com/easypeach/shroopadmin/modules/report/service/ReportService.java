@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.easypeach.shroopadmin.modules.report.domain.Report;
 import com.easypeach.shroopadmin.modules.report.domain.ReportRepository;
 import com.easypeach.shroopadmin.modules.report.domain.ReportStatus;
+import com.easypeach.shroopadmin.modules.report.dto.request.SearchReportRequest;
+import com.easypeach.shroopadmin.modules.report.dto.response.PageReportResponse;
 import com.easypeach.shroopadmin.modules.report.dto.response.ReportResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -21,11 +23,18 @@ public class ReportService {
 
 	private final ReportRepository reportRepository;
 
-	public List<ReportResponse> findAll(final Pageable pageable) {
+	public PageReportResponse searchFindAll(final SearchReportRequest searchReportRequest, final Pageable pageable) {
 
-		List<Report> list = reportRepository.findAllFetchJoin(pageable);
+		String searchWord = searchReportRequest.getSearchWord().isEmpty() ? "" : searchReportRequest.getSearchWord();
 
-		return list.stream().map(ReportResponse::new).collect(Collectors.toList());
+		List<Report> reportList = reportRepository.searchFindAllFetchJoin(searchWord, pageable);
+
+		List<ReportResponse> list = reportList.stream().map(ReportResponse::new).collect(Collectors.toList());
+		int totalDataCount = reportRepository.searchFindAllFetchJoinPageCount(searchWord);
+
+		PageReportResponse pageReportResponse = new PageReportResponse(totalDataCount, list);
+
+		return pageReportResponse;
 	}
 
 	public ReportResponse findById(final Long reportId) {
