@@ -1,4 +1,4 @@
-package com.easypeach.shroopadmin.modules.member.domain;
+package com.easypeach.shroopadmin.modules.secession;
 
 import java.time.LocalDateTime;
 
@@ -15,14 +15,22 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.easypeach.shroopadmin.modules.member.domain.Member;
+import com.easypeach.shroopadmin.modules.member.domain.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Entity
+@Builder
 @EntityListeners(AuditingEntityListener.class)
 @Getter
-public class Member {
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+public class BlackMember {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,23 +72,21 @@ public class Member {
 	@LastModifiedDate
 	private LocalDateTime updateDate;
 
-	@Column(nullable = false, name = "check_agree")
-	private boolean checkAgree;
-
 	@Column
 	private String account;
 
-	public void updateLoginId(String loginId){
-		this.loginId = loginId;
-	}
-
-	public void updateNickname(String nickname){
-		this.nickname = nickname;
-	}
-
-	public void updateRole(Role role){
-		this.role = role;
+	public static BlackMember from(Member member){
+		BlackMember blackMember = new BlackMember();
+		blackMember.loginId = member.getLoginId();
+		blackMember.nickname = member.getNickname();
+		blackMember.account = member.getAccount();
+		blackMember.password = member.getPassword();
+		blackMember.phoneNumber = member.getPhoneNumber();
+		blackMember.point = member.getPoint();
+		blackMember.GradeScore = member.getGradeScore();
+		blackMember.role = member.getRole();
+		blackMember.createDate = member.getCreateDate();
+		return blackMember;
 	}
 
 }
-
