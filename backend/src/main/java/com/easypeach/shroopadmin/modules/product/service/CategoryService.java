@@ -28,8 +28,14 @@ public class CategoryService {
 		Page<Category> categoryList = categoryRepository.findByNameContaining(searchWord, pageable);
 		List<CategoryResponse> list = categoryList.stream().map(CategoryResponse::new).collect(Collectors.toList());
 		int totalCount = (int)categoryList.getTotalElements();
-		
+
 		return new PageCategoryResponse(totalCount, list);
+	}
+
+	public CategoryResponse findById(final Long categoryId) {
+		Category category = categoryRepository.getById(categoryId);
+
+		return new CategoryResponse(category);
 	}
 
 }
