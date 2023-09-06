@@ -11,6 +11,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
 	Page<Category> findByNameContaining(String name, Pageable pageable);
 
+	boolean existsByName(String name);
+
 	default Category getById(Long categoryId) {
 		return findById(categoryId).orElseThrow(() -> new CategoryNotExistException("카테고리가 존재하지 않습니다."));
 	}
