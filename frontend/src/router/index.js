@@ -13,6 +13,7 @@ import ProductDetailsView from "@/views/product/ProductDetailsView.vue";
 import RegistProductView from "@/views/product/RegistProductView.vue";
 import ReportView from "@/views/report/ReportView.vue";
 import ReportDetailsView from "@/views/report/ReportDetailsView.vue";
+import CategoryView from "@/views/catogory/CategoryView.vue";
 
 const routes = [
   {
@@ -63,6 +64,11 @@ const routes = [
         path: "/product/:id(\\d+)",
         name: "ProductDetails",
         component: ProductDetailsView,
+      },
+      {
+        path: "/category",
+        name: "Category",
+        component: CategoryView,
       },
       {
         path: "/regist",
