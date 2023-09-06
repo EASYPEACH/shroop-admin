@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.easypeach.shroopadmin.modules.global.request.SearchRequest;
 import com.easypeach.shroopadmin.modules.global.response.BasicResponse;
 import com.easypeach.shroopadmin.modules.report.dto.request.ReportStatusRequest;
-import com.easypeach.shroopadmin.modules.report.dto.request.SearchReportRequest;
 import com.easypeach.shroopadmin.modules.report.dto.response.PageReportResponse;
 import com.easypeach.shroopadmin.modules.report.dto.response.ReportResponse;
 import com.easypeach.shroopadmin.modules.report.service.ReportService;
@@ -33,9 +33,9 @@ public class ReportController {
 
 	@GetMapping
 	public ResponseEntity<PageReportResponse> searchFindAll(
-		final SearchReportRequest searchReportRequest,
+		final SearchRequest searchRequest,
 		final @PageableDefault(size = 10, sort = "createDate", direction = Sort.Direction.DESC) Pageable pageable) {
-		PageReportResponse response = reportService.searchFindAll(searchReportRequest, pageable);
+		PageReportResponse response = reportService.searchFindAll(searchRequest, pageable);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 

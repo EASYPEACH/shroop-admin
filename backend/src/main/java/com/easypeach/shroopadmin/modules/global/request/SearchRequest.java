@@ -1,4 +1,4 @@
-package com.easypeach.shroopadmin.modules.report.dto.request;
+package com.easypeach.shroopadmin.modules.global.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class SearchReportRequest {
+public class SearchRequest {
 
 	private String searchWord;
 

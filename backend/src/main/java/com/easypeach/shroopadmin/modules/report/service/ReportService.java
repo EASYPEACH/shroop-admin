@@ -7,10 +7,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.easypeach.shroopadmin.modules.global.request.SearchRequest;
 import com.easypeach.shroopadmin.modules.report.domain.Report;
 import com.easypeach.shroopadmin.modules.report.domain.ReportRepository;
 import com.easypeach.shroopadmin.modules.report.domain.ReportStatus;
-import com.easypeach.shroopadmin.modules.report.dto.request.SearchReportRequest;
 import com.easypeach.shroopadmin.modules.report.dto.response.MediateResponse;
 import com.easypeach.shroopadmin.modules.report.dto.response.PageMediateResponse;
 import com.easypeach.shroopadmin.modules.report.dto.response.PageReportResponse;
@@ -28,9 +28,9 @@ public class ReportService {
 
 	private final ReportImgService reportImgService;
 
-	public PageReportResponse searchFindAll(final SearchReportRequest searchReportRequest, final Pageable pageable) {
+	public PageReportResponse searchFindAll(final SearchRequest searchRequest, final Pageable pageable) {
 
-		String searchWord = searchReportRequest.getSearchWord().isEmpty() ? "" : searchReportRequest.getSearchWord();
+		String searchWord = searchRequest.getSearchWord().isEmpty() ? "" : searchRequest.getSearchWord();
 
 		List<Report> reportList = reportRepository.reportSearchFindAllFetchJoin(searchWord, pageable);
 
@@ -59,9 +59,9 @@ public class ReportService {
 
 	}
 
-	public PageMediateResponse mediateSearchFindAll(final SearchReportRequest searchReportRequest,
+	public PageMediateResponse mediateSearchFindAll(final SearchRequest searchRequest,
 		final Pageable pageable) {
-		String searchWord = searchReportRequest.getSearchWord().isEmpty() ? "" : searchReportRequest.getSearchWord();
+		String searchWord = searchRequest.getSearchWord().isEmpty() ? "" : searchRequest.getSearchWord();
 
 		List<Report> reportList = reportRepository.mediateSearchFindAllFetchJoin(searchWord, pageable);
 
