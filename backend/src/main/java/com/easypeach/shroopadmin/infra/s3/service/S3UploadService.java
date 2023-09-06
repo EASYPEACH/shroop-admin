@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.sun.jdi.InternalException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,21 +26,20 @@ public class S3UploadService {
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
 
-	public String saveFile(final MultipartFile multipartFile) throws IOException {
-		String originalFilename = multipartFile.getOriginalFilename();
+	public String saveFile(final MultipartFile multipartFile) {
+		try {
+			String originalFilename = multipartFile.getOriginalFilename();
+			ObjectMetadata metadata = new ObjectMetadata();
+			metadata.setContentLength(multipartFile.getSize());
+			metadata.setContentType(multipartFile.getContentType());
+			// 저장
+			log.info("image save region = {}",amazonS3Client.getRegion());
+			amazonS3Client.putObject(bucket, originalFilename, multipartFile.getInputStream(), metadata);
+			return amazonS3Client.getUrl(bucket, originalFilename).toString();
+		}catch (IOException e){
+			throw new InternalException("서버에 문제가 생겼습니다");
+		}
 
-		ObjectMetadata metadata = new ObjectMetadata();
-		metadata.setContentLength(multipartFile.getSize());
-
-		metadata.setContentType(multipartFile.getContentType());
-
-		// 저장
-		System.out.println(amazonS3Client.getRegion());
-
-		amazonS3Client.putObject(bucket, originalFilename, multipartFile.getInputStream(), metadata);
-
-		// 저장된 파일의 URL 반환
-		return amazonS3Client.getUrl(bucket, originalFilename).toString();
 	}
 
 	public ResponseEntity<UrlResource> downloadImage(final String originalFilename) {

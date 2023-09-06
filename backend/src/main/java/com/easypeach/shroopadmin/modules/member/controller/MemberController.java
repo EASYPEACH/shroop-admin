@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.Response;
 import com.easypeach.shroopadmin.modules.global.response.BasicResponse;
@@ -75,21 +77,24 @@ public class MemberController {
 	}
 
 	@PatchMapping("/{memberId}")
-	public ResponseEntity<BasicResponse> requestEdit(@PathVariable Long memberId, @RequestBody MemberInfo form){
-		memberService.update(memberId, form);
+	public ResponseEntity<BasicResponse> requestEdit(@PathVariable Long memberId,
+		@RequestPart(value = "userImg",required = false) List<MultipartFile> userImgList,
+		@RequestPart MemberInfo editRequest){
+		log.info("------ _{} {}",editRequest, userImgList);
+		memberService.update(memberId, editRequest,userImgList);
 		return ResponseEntity.ok(new BasicResponse("수정 처리가 되었습니다."));
 	}
 
 	@DeleteMapping("/{memberId}")
-	public ResponseEntity<BasicResponse> requestDelete(@PathVariable Long memberId){
-		memberService.delete(memberId);
-		return ResponseEntity.ok(new BasicResponse("탈퇴 처리가 되었습니다."));
+	public ResponseEntity<BasicResponse> deleteMember(@PathVariable Long memberId){
+		String resultMsg = memberService.delete(memberId);
+		return ResponseEntity.ok(new BasicResponse(resultMsg));
 	}
 
 	@PatchMapping("/{memberId}/role")
-	public ResponseEntity<BasicResponse> updateRole(@PathVariable Long memberId){
-		memberService.removeRole(memberId);
-		return ResponseEntity.ok(new BasicResponse("차단 처리가 되었습니다."));
+	public ResponseEntity<BasicResponse> blockMember(@PathVariable Long memberId){
+		String resultMsg = memberService.changeRole(memberId);
+		return ResponseEntity.ok(new BasicResponse(resultMsg));
 	}
 
 }

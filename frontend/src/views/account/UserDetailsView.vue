@@ -67,7 +67,7 @@
 </template>
 
 <script setup>
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount, ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { getApi } from "@/api/modules";
 import BackButton from "@/components/Button/BackButton.vue";
@@ -83,6 +83,7 @@ const user = ref({
   createDate: "",
 });
 const userLogs = ref([]);
+const currentPage = ref(0);
 const perPageSize = ref(10);
 const totalSize = ref(10);
 const router = useRouter();
@@ -104,13 +105,13 @@ const headers = ref([
   {
     title: "기록",
     align: "start",
-    sortable: true,
+    sortable: false,
     key: "log",
   },
   {
     title: "param-name",
     align: "start",
-    sortable: true,
+    sortable: false,
     key: "paramName",
   },
   {
@@ -135,15 +136,24 @@ onBeforeMount(async () => {
     console.error(err);
   }
 
+  handleGetUserLogs();
+});
+
+const handleGetUserLogs = async () => {
   try {
     const data = await getApi({
-      url: `/api/members/${route.params.id}/log?page=0&size=2&sort=id,desc`,
+      url: `/api/members/${route.params.id}/log?page=${currentPage.value}&size=${perPageSize.value}&sort=id,desc`,
     });
-    console.log(data.content);
+    console.log(data);
+    totalSize.value = data.totalElements;
     userLogs.value = data.content;
   } catch (err) {
     console.error(err);
   }
+};
+
+watch([perPageSize, currentPage], async () => {
+  await handleGetUserLogs();
 });
 </script>
 

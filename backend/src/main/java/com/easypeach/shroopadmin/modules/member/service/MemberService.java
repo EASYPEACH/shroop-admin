@@ -1,16 +1,19 @@
 package com.easypeach.shroopadmin.modules.member.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.easypeach.shroopadmin.infra.s3.service.S3UploadService;
 import com.easypeach.shroopadmin.modules.member.domain.Member;
 import com.easypeach.shroopadmin.modules.member.domain.MemberRepository;
 import com.easypeach.shroopadmin.modules.member.domain.Role;
 import com.easypeach.shroopadmin.modules.member.dto.response.MemberInfo;
-import com.easypeach.shroopadmin.modules.secession.BlackMember;
-import com.easypeach.shroopadmin.modules.secession.BlackMemberRepository;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class MemberService {
 	private final MemberRepository memberRepository;
-	private final BlackMemberRepository blackMemberRepository;
+	private final S3UploadService s3UploadService;
 
 	public Page<MemberInfo> getMemberList(Pageable pageable) {
 		Page<Member> members = memberRepository.findAll(pageable);
@@ -30,7 +33,9 @@ public class MemberService {
 			m.getLoginId(),
 			m.getNickname(),
 			m.getPhoneNumber(),
-			m.getCreateDate()));
+			m.getCreateDate(),
+			m.getGradeScore(),
+			m.getRole()));
 
 		return dtoMembers;
 	}
@@ -44,31 +49,46 @@ public class MemberService {
 			member.getNickname(),
 			member.getPhoneNumber(),
 			member.getCreateDate(),
-			member.getGradeScore());
+			member.getGradeScore(),
+			member.getRole());
 
 		return memberInfo;
 	}
 
-	public Member update(Long memberId, MemberInfo memberInfo) {
+	public Member update(Long memberId, MemberInfo memberInfo, List<MultipartFile> userImgList) {
 		Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
 		member.updateLoginId(memberInfo.getLoginId());
 		member.updateNickname(memberInfo.getNickName());
+		String imgUrl = "";
+		if (userImgList!= null) {
+			imgUrl = s3UploadService.saveFile(userImgList.get(userImgList.size()-1));
+			member.updateProfileImg(imgUrl);
+		}
+
 		return member;
 	}
 
-	public BlackMember delete(Long memberId) {
+	public String delete(Long memberId) {
 		Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
-
-		BlackMember blackMember = BlackMember.from(member);
-		blackMemberRepository.save(blackMember);
-		memberRepository.delete(member);
-		return blackMember;
+		if(!member.getRole().equals(Role.ROLE_DELETE)){
+			member.updateRole(Role.ROLE_DELETE);
+			return "탈퇴 처리가 완료되었습니다";
+		}else{
+			member.updateRole(Role.ROLE_USER);
+			return "탈퇴 복구가 완료되었습니다";
+		}
 	}
 
-	public Member removeRole(Long memberId) {
+	public String changeRole(Long memberId) {
 		Member member = memberRepository.findById(memberId).orElseThrow(IllegalArgumentException::new);
-		member.updateRole(Role.ROLE_NOT_AUTH_USER);
-		return member;
+		if(!member.getRole().equals(Role.ROLE_NOT_AUTH_USER)) {
+			member.updateRole(Role.ROLE_NOT_AUTH_USER);
+			return "차단 처리가 완료되었습니다";
+		}else{
+			member.updateRole(Role.ROLE_USER);
+			return "차단 해제가 완료되었습니다";
+		}
+
 	}
 
 }

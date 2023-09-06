@@ -82,5 +82,9 @@ public class Member {
 		this.role = role;
 	}
 
+	public void updateProfileImg(String url){
+		this.profileImg = url;
+	}
+
 }
 

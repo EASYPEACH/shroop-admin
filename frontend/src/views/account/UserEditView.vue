@@ -9,7 +9,7 @@
       >
         <div class="profile__info-imgbox">
           <div class="profile__info-img">
-            <img :src="user.profileImg ? user.profileImg : basicProfile" />
+            <img :src="imageThumb ? imageThumb : user.profileImg" />
             <label for="profile_image" class="profile__info-edit">
               <v-icon icon="mdi-camera" />
             </label>
@@ -45,7 +45,6 @@
           type="submit"
           height="auto"
           class="submit-button"
-          :disabled="!isValid"
           text="수정 완료"
         />
       </v-form>
@@ -54,12 +53,15 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { changeImageToData } from "@/utils";
+import { ref, onBeforeMount } from "vue";
+import { getApi, patchApi } from "@/api/modules";
+import { useRouter, useRoute } from "vue-router";
 import BackButton from "@/components/Button/BackButton.vue";
 import basicProfile from "@/assets/basicProfile.jpeg";
 import CustomTextInput from "@/components/Form/CustomTextInput.vue";
-
+import { multipartFormDataJson, changeImageToData } from "@/utils";
+const router = useRouter();
+const route = useRoute();
 const user = ref({
   id: 1,
   loginId: "김바보11",
@@ -68,14 +70,63 @@ const user = ref({
     "https://shroop-s3.s3.ap-northeast-2.amazonaws.com/logo-color.png",
   createDate: "2023-09-01",
 });
+const imageThumb = ref(null);
+const imageData = ref(null);
+const profileImgRef = ref(null);
 
 const handleChangeProfile = async (event) => {
-  isValid.value = true;
   imageData.value = event.target.files[0];
   imageThumb.value = await changeImageToData(imageData.value);
 };
 const handleInputChangeEvent = () => {};
-const handleSubmitRegister = () => {};
+const handleSubmitRegister = () => {
+  handleSaveUserInfo();
+};
+
+onBeforeMount(async () => {
+  try {
+    const data = await getApi({
+      url: `/api/members/${route.params.id}`,
+    });
+    console.log(data);
+    user.value = data;
+    if (data.profileImg === null) {
+      user.value.profileImg =
+        "https://shroop-s3.s3.ap-northeast-2.amazonaws.com/logo-color.png";
+    }
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+const handleSaveUserInfo = async () => {
+  let formData = new FormData();
+
+  if (profileImgRef.value !== null) {
+    Array.from(profileImgRef.value.files).forEach((file) => {
+      formData.append("userImg", file);
+    });
+  }
+
+  multipartFormDataJson(formData, "editRequest", {
+    id: `${route.params.id}`,
+    loginId: user.value.loginId,
+    nickName: user.value.nickName,
+    phoneNumber: user.value.phoneNumber,
+    createDate: user.value.createDate,
+    gradeScore: user.value.gradeScore,
+  });
+
+  try {
+    const res = await patchApi({
+      url: `/api/members/${route.params.id}`,
+      data: formData,
+    });
+    console.log(res);
+  } catch (err) {
+    console.error(err);
+  }
+};
 </script>
 
 <style lang="scss" scoped>
