@@ -31,4 +31,8 @@ public class Category {
 		category.name = name;
 		return category;
 	}
+
+	public void updateName(final String name) {
+		this.name = name;
+	}
 }

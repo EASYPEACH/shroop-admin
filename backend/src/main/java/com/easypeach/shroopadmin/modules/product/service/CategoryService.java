@@ -48,4 +48,11 @@ public class CategoryService {
 		categoryRepository.save(category);
 	}
 
+	@Transactional
+	public void update(final Long categoryId, final CategoryRequest categoryRequest) {
+		Category category = categoryRepository.getById(categoryId);
+		String name = categoryRequest.getName();
+		category.updateName(name);
+	}
+
 }

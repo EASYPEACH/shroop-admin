@@ -4,6 +4,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,7 +52,14 @@ public class CategoryController {
 		categoryService.create(categoryRequest);
 
 		return ResponseEntity.status(HttpStatus.OK).body(new BasicResponse("카테고리가 추가되었습니다."));
+	}
 
+	@PatchMapping("/{categoryId}")
+	public ResponseEntity<BasicResponse> update(final @PathVariable Long categoryId,
+		final @RequestBody CategoryRequest categoryRequest) {
+		categoryService.update(categoryId, categoryRequest);
+
+		return ResponseEntity.status(HttpStatus.OK).body(new BasicResponse("카테고리가 수정되었습니다."));
 	}
 
 }
