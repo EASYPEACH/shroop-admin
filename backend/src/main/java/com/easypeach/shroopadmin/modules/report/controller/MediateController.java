@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.easypeach.shroopadmin.modules.report.dto.request.SearchReportRequest;
+import com.easypeach.shroopadmin.modules.global.request.SearchRequest;
 import com.easypeach.shroopadmin.modules.report.dto.response.MediateResponse;
 import com.easypeach.shroopadmin.modules.report.dto.response.PageMediateResponse;
 import com.easypeach.shroopadmin.modules.report.service.ReportService;
@@ -28,10 +28,10 @@ public class MediateController {
 
 	@GetMapping
 	public ResponseEntity<PageMediateResponse> mediateSearchFindAll(
-		final SearchReportRequest searchReportRequest,
+		final SearchRequest searchRequest,
 		final @PageableDefault(size = 10, sort = "createDate", direction = Sort.Direction.DESC) Pageable pageable
 	) {
-		PageMediateResponse pageMediateResponse = reportService.mediateSearchFindAll(searchReportRequest, pageable);
+		PageMediateResponse pageMediateResponse = reportService.mediateSearchFindAll(searchRequest, pageable);
 
 		return ResponseEntity.status(HttpStatus.OK).body(pageMediateResponse);
 
