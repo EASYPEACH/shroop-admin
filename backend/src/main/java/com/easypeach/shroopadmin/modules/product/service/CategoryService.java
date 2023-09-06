@@ -14,6 +14,7 @@ import com.easypeach.shroopadmin.modules.product.dto.request.CategoryRequest;
 import com.easypeach.shroopadmin.modules.product.dto.response.CategoryResponse;
 import com.easypeach.shroopadmin.modules.product.dto.response.PageCategoryResponse;
 import com.easypeach.shroopadmin.modules.product.exception.CategoryDeleteException;
+import com.easypeach.shroopadmin.modules.product.exception.DuplicateCategoryException;
 import com.easypeach.shroopadmin.modules.product.respository.CategoryRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,12 @@ public class CategoryService {
 	@Transactional
 	public void create(final CategoryRequest categoryRequest) {
 		String name = categoryRequest.getName();
+
+		boolean sameNameExistCategory = categoryRepository.existsByName(name);
+		if (sameNameExistCategory) {
+			throw new DuplicateCategoryException("동일한 카테고리명이 존재합니다.");
+		}
+
 		Category category = Category.createCategory(name);
 		categoryRepository.save(category);
 	}
@@ -55,6 +62,12 @@ public class CategoryService {
 	public void update(final Long categoryId, final CategoryRequest categoryRequest) {
 		Category category = categoryRepository.getById(categoryId);
 		String name = categoryRequest.getName();
+
+		boolean sameNameExistCategory = categoryRepository.existsByName(name);
+		if (sameNameExistCategory) {
+			throw new DuplicateCategoryException("동일한 카테고리명이 존재합니다.");
+		}
+
 		category.updateName(name);
 	}
 
