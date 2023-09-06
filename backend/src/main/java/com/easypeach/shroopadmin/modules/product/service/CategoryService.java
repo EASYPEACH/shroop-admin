@@ -6,15 +6,18 @@ import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.easypeach.shroopadmin.modules.global.request.SearchRequest;
 import com.easypeach.shroopadmin.modules.product.domain.Category;
+import com.easypeach.shroopadmin.modules.product.dto.request.CategoryRequest;
 import com.easypeach.shroopadmin.modules.product.dto.response.CategoryResponse;
 import com.easypeach.shroopadmin.modules.product.dto.response.PageCategoryResponse;
 import com.easypeach.shroopadmin.modules.product.respository.CategoryRepository;
 
 import lombok.RequiredArgsConstructor;
 
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class CategoryService {
@@ -36,6 +39,13 @@ public class CategoryService {
 		Category category = categoryRepository.getById(categoryId);
 
 		return new CategoryResponse(category);
+	}
+
+	@Transactional
+	public void create(final CategoryRequest categoryRequest) {
+		String name = categoryRequest.getName();
+		Category category = Category.createCategory(name);
+		categoryRepository.save(category);
 	}
 
 }

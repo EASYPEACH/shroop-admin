@@ -7,4 +7,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CategoryRequest {
 
+	private String name;
+
+	public CategoryRequest(String name) {
+		this.name = name;
+	}
 }
