@@ -58,6 +58,11 @@ const navigationList = [
     link: "product",
   },
   {
+    title: "카테고리관리",
+    icon: "mdi-shape-plus",
+    link: "category",
+  },
+  {
     title: "신고관리",
     icon: "mdi-bug",
     link: "report",
