@@ -3,6 +3,7 @@ package com.easypeach.shroopadmin.modules.product.controller;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,6 +61,13 @@ public class CategoryController {
 		categoryService.update(categoryId, categoryRequest);
 
 		return ResponseEntity.status(HttpStatus.OK).body(new BasicResponse("카테고리가 수정되었습니다."));
+	}
+
+	@DeleteMapping("/{categoryId}")
+	public ResponseEntity<BasicResponse> delete(final @PathVariable Long categoryId) {
+		categoryService.deleteById(categoryId);
+
+		return ResponseEntity.status(HttpStatus.OK).body(new BasicResponse("카테고리가 삭제되었습니다."));
 	}
 
 }

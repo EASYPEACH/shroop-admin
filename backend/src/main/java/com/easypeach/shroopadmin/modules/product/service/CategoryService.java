@@ -13,6 +13,7 @@ import com.easypeach.shroopadmin.modules.product.domain.Category;
 import com.easypeach.shroopadmin.modules.product.dto.request.CategoryRequest;
 import com.easypeach.shroopadmin.modules.product.dto.response.CategoryResponse;
 import com.easypeach.shroopadmin.modules.product.dto.response.PageCategoryResponse;
+import com.easypeach.shroopadmin.modules.product.exception.CategoryDeleteException;
 import com.easypeach.shroopadmin.modules.product.respository.CategoryRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class CategoryService {
 
 	private final CategoryRepository categoryRepository;
+
+	private final ProductService productService;
 
 	public PageCategoryResponse searchFindAll(final SearchRequest searchRequest, final Pageable pageable) {
 
@@ -53,6 +56,15 @@ public class CategoryService {
 		Category category = categoryRepository.getById(categoryId);
 		String name = categoryRequest.getName();
 		category.updateName(name);
+	}
+
+	@Transactional
+	public void deleteById(final Long categoryId) {
+		int productCount = productService.findByCategoryId(categoryId).size();
+		if (productCount > 0) {
+			throw new CategoryDeleteException("해당 카테고리 안에 상품이 존재합니다.");
+		}
+		categoryRepository.deleteById(categoryId);
 	}
 
 }
