@@ -54,7 +54,7 @@ public class Member {
 	private Long point;
 
 	@Column(name = "grade_score")
-	private Long GradeScore;
+	private Long gradeScore;
 
 	@Column(name = "create_date")
 	@CreatedDate
