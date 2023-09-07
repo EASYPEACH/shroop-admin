@@ -125,7 +125,7 @@ public class MemberService {
 	public Boolean checkLogin(String loginId) {
 		if (loginId == null){
 			System.out.println("탓니?");
-			throw new NotAuthrizedUserException("로그인이 필요합니다.");
+			return false;
 		}
 		return true;
 	}

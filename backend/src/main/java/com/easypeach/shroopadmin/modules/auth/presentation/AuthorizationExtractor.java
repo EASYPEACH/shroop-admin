@@ -19,6 +19,7 @@ public class AuthorizationExtractor {
 				}
 			}
 		}
-		throw new NotAuthrizedUserException("로그인이 필요합니다.");
+
+		throw new NotAuthrizedUserException("로그인이 필요합니다.[로그인 체크]");
 	}
 }

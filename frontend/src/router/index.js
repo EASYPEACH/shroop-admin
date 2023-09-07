@@ -14,6 +14,8 @@ import RegistProductView from "@/views/product/RegistProductView.vue";
 import ReportView from "@/views/report/ReportView.vue";
 import ReportDetailsView from "@/views/report/ReportDetailsView.vue";
 import CategoryView from "@/views/catogory/CategoryView.vue";
+import { getApi } from "@/api/modules";
+import { useCheckLogin } from "@/store/useCheckLogin";
 
 const routes = [
   {
@@ -97,6 +99,24 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach(async (to) => {
+  const loginCheckStore = useCheckLogin();
+  if (to.path !== "/login") {
+    try {
+      const response = await getApi({
+        url: "/api/auth/checkLogin",
+      });
+      console.log(response);
+      loginCheckStore.setIsLogin(response);
+    } catch (error) {
+      if (error.response.status == 403) {
+        loginCheckStore.setIsLogin(false);
+      }
+    }
+    if (!loginCheckStore.isLogin) return "/login";
+  }
 });
 
 export default router;
