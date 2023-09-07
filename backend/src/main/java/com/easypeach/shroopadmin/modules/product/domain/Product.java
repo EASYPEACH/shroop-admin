@@ -20,11 +20,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.easypeach.shroopadmin.modules.member.domain.Member;
+import com.easypeach.shroopadmin.modules.product.dto.request.ProductRequest;
 import com.easypeach.shroopadmin.modules.transaction.domain.Transaction;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -32,6 +35,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@DynamicInsert
+@DynamicUpdate
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -42,7 +47,7 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "seller_id", nullable = false)
 	private Member seller;
 
@@ -52,7 +57,7 @@ public class Product {
 	@Column(length = 100, nullable = false)
 	private String title;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "category_id", nullable = false)
 	private Category category;
 
@@ -96,5 +101,37 @@ public class Product {
 	@Column(name = "update_date")
 	@LastModifiedDate
 	private LocalDateTime updateDate;
+
+	public static Product createProduct(
+		final Member seller,
+		final ProductRequest productRequest,
+		final Category category
+	) {
+		Product product = new Product();
+		product.seller = seller;
+		return setByProductRequest(product, productRequest, category);
+	}
+
+	public static Product setByProductRequest(Product product, ProductRequest productRequest, Category category) {
+		product.title = productRequest.getTitle();
+		product.category = category;
+		product.purchaseDate = productRequest.getPurchaseDate();
+		product.productGrade = productRequest.getProductGrade();
+		product.brand = productRequest.getBrand();
+		product.price = productRequest.getPrice();
+		product.isCheckedDeliveryFee = productRequest.getIsCheckedDeliveryFee();
+		product.isDefect = productRequest.getIsDefect();
+		product.saleReason = productRequest.getSaleReason();
+		product.content = productRequest.getContent();
+		return product;
+	}
+
+	public void updateProduct(
+		final ProductRequest productRequest,
+		final Category category
+	) {
+		setByProductRequest(this, productRequest, category);
+	}
+
 
 }

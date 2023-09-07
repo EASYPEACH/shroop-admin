@@ -1,6 +1,6 @@
 <template>
   <section>
-    <back-button />
+    <!-- <back-button /> -->
     <div class="imgSlide">
       <v-carousel
         hide-delimiter-background

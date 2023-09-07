@@ -43,5 +43,17 @@ public class ProductImg {
 	@Column(name = "create_date")
 	@CreatedDate
 	private LocalDateTime createDate;
+	public static ProductImg createProductImg(final Product product, final String productImgUrl,
+		final boolean isDefect) {
+		ProductImg productImg = new ProductImg();
+		productImg.product = product;
+		productImg.productImgUrl = productImgUrl;
+		productImg.isDefect = isDefect;
+		return productImg;
+	}
 
+	public void setProduct(Product product) {
+		this.product = product;
+		product.getProductImgList().add(this);
+	}
 }

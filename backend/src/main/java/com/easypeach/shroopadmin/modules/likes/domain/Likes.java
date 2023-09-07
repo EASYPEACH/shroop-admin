@@ -1,4 +1,4 @@
-package com.easypeach.shroopadmin.modules.like.domain;
+package com.easypeach.shroopadmin.modules.likes.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +14,7 @@ import com.easypeach.shroopadmin.modules.product.domain.Product;
 
 @Table(name = "likes")
 @Entity
-public class Like {
+public class Likes {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +27,11 @@ public class Like {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
+
+	public static Likes createLike(Member member, Product product) {
+		Likes like = new Likes();
+		like.member = member;
+		like.product = product;
+		return like;
+	}
 }

@@ -184,10 +184,11 @@ const productGradeValue = ref("");
 const content = ref("");
 const saleReason = ref("");
 const brandModel = ref("");
+const seller = ref(0);
 
 onMounted(async () => {
   const categoryData = await getApi({
-    url: "/api/categorys",
+    url: "/api/categories/getAll",
   });
   category.value = categoryData;
   if (route.path.split("/")[1] === "regist") {
@@ -221,6 +222,7 @@ onMounted(async () => {
     isDefect.value = data.isDefect;
     saleReason.value = data.saleReason;
     content.value = data.content;
+    seller.value = data.seller.id;
 
     // S3 이미지 URL을 File Data로 변환
     let productImgdataTransfer = await changeUrlToFiles(
@@ -263,6 +265,8 @@ const handleSubmitRegister = async () => {
       checkRequired.value = true;
 
       // 첨부한 이미지와 폼에 입력한 데이터를 multipart/formdata로 변환
+      multipartFormDataJson(formData, "memberId", seller.value);
+      multipartFormDataJson(formData, "productId", route.params.id);
       multipartFormDataFile(formData, productRef.value, "productImgList");
       multipartFormDataFile(formData, defectedtRef.value, "defectImgList");
       multipartFormDataJson(formData, "productRequest", {
@@ -298,7 +302,7 @@ const handleSubmitRegister = async () => {
             });
           }
 
-          // router.push(`/detail/${data.productId}`);
+          router.push(`/product/${data.productId}`);
         }
       } catch (err) {
         console.error(err);

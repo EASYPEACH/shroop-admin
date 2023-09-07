@@ -1,5 +1,7 @@
 package com.easypeach.shroopadmin.modules.product.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +40,13 @@ public class CategoryController {
 
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
+
+	@GetMapping("/getAll")
+	public ResponseEntity<List<CategoryResponse>> getCategoryList() {
+		List<CategoryResponse> categoryResponse = categoryService.findAll();
+		return ResponseEntity.status(HttpStatus.OK).body(categoryResponse);
+	}
+
 
 	@GetMapping("/{categoryId}")
 	public ResponseEntity<CategoryResponse> findById(final @PathVariable Long categoryId) {

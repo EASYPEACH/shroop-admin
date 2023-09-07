@@ -39,6 +39,13 @@ public class CategoryService {
 		return new PageCategoryResponse(totalCount, list);
 	}
 
+	public List<CategoryResponse> findAll() {
+		return categoryRepository.findAll()
+			.stream()
+			.map(category -> new CategoryResponse(category))
+			.collect(Collectors.toList());
+	}
+
 	public CategoryResponse findById(final Long categoryId) {
 		Category category = categoryRepository.getById(categoryId);
 

@@ -13,6 +13,7 @@ import com.easypeach.shroopadmin.modules.global.exception.dto.ErrorResponse;
 
 import com.easypeach.shroopadmin.modules.product.exception.CategoryDeleteException;
 import com.easypeach.shroopadmin.modules.product.exception.DuplicateCategoryException;
+import com.easypeach.shroopadmin.modules.product.exception.ProductException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,8 +23,9 @@ public class ExceptionControllerAdvice {
 	@ExceptionHandler({
 		CategoryDeleteException.class,
 		DuplicateCategoryException.class,
+		ProductException.class,
 		InvalidTokenException.class
-	})
+,	})
 	public ResponseEntity<ErrorResponse> handleNotExistException(final RuntimeException e) {
 		String errorMessage = e.getMessage();
 		ErrorResponse errorResponse = new ErrorResponse(errorMessage);
