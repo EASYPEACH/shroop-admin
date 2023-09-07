@@ -51,6 +51,8 @@ public class AuthController {
 
 		accessToken.setValue(null);
 		accessToken.setPath("/");
+		accessToken.setHttpOnly(true);
+		accessToken.setSecure(true);
 		response.addCookie(accessToken);
 
 		return ResponseEntity.ok().body(new BasicResponse("로그아웃 되었습니다."));
@@ -63,7 +65,7 @@ public class AuthController {
 		Cookie cookie = new Cookie("ACCESS_TOKEN", accessToken);
 		cookie.setPath("/");
 		cookie.setHttpOnly(true);
-		cookie.setSecure(false);
+		cookie.setSecure(true);
 		
 		httpServletResponse.addCookie(cookie);
 	}
