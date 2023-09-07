@@ -23,8 +23,6 @@ import com.easypeach.shroopadmin.modules.member.dto.request.MemberSignInRequest;
 import com.easypeach.shroopadmin.modules.member.dto.response.MemberInfo;
 
 import com.easypeach.shroopadmin.modules.member.exception.UnAthoriazedException;
-import com.easypeach.shroopadmin.modules.secession.BlackMember;
-import com.easypeach.shroopadmin.modules.secession.BlackMemberRepository;
 
 
 import lombok.RequiredArgsConstructor;
@@ -37,7 +35,6 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberService {
 	private final MemberRepository memberRepository;
 
-	private final BlackMemberRepository blackMemberRepository;
 	private final JwtProvider jwtProvider;
 	private final PasswordEncoder passwordEncoder;
 

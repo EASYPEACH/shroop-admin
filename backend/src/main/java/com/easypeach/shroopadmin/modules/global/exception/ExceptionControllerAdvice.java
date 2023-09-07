@@ -21,16 +21,14 @@ import lombok.extern.slf4j.Slf4j;
 public class ExceptionControllerAdvice {
 	@ExceptionHandler({
 		CategoryDeleteException.class,
-		DuplicateCategoryException.class
+		DuplicateCategoryException.class,
+		InvalidTokenException.class
 	})
 	public ResponseEntity<ErrorResponse> handleNotExistException(final RuntimeException e) {
 		String errorMessage = e.getMessage();
 		ErrorResponse errorResponse = new ErrorResponse(errorMessage);
 		return ResponseEntity.status(400).body(errorResponse);
 	}
-
-	@ExceptionHandler
-	public ResponseEntity<ErrorResponse> handleException(final Exception e) {
 
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -41,15 +39,6 @@ public class ExceptionControllerAdvice {
 		ErrorResponse errorResponse = new ErrorResponse(errorMessage);
 
 		return ResponseEntity.badRequest().body(errorResponse);
-	}
-
-	@ExceptionHandler({
-		InvalidTokenException.class
-	})
-	public ResponseEntity<ErrorResponse> handleNotExistException(final RuntimeException e) {
-		String errorMessage = e.getMessage();
-		ErrorResponse errorResponse = new ErrorResponse(errorMessage);
-		return ResponseEntity.status(404).body(errorResponse);
 	}
 
 	@ExceptionHandler({
