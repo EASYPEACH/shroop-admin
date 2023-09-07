@@ -32,7 +32,7 @@ public class AuthController {
 	private final MemberService memberService;
 	private final JwtProvider jwtProvider;
 
-	@GetMapping("/")
+	@GetMapping("/checkLogin")
 	public ResponseEntity<Boolean> checkLogin(@AuthenticationPrincipal String loginId){
 		Boolean isLogin = memberService.checkLogin(loginId);
 		return ResponseEntity.ok().body(isLogin);
