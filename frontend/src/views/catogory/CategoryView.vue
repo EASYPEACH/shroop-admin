@@ -1,18 +1,23 @@
 <template>
   <section>
-    <common-title title="중재관리" />
+    <common-title title="카테고리관리" />
+    <manage-button
+      button-text="카테고리등록"
+      class="regist"
+      :handleClick="() => (showCreateModal = true)"
+    />
     <v-text-field
       v-model="search"
       append-inner-icon="mdi-magnify"
       label="Search"
       single-line
       hide-details
-      @click:append-inner="handleGetMediates"
-      @keypress="(e) => e.keyCode === 13 && handleGetMediates()"
+      @click:append-inner="handleGetCategories"
+      @keypress="(e) => e.keyCode === 13 && handleGetCategories()"
     ></v-text-field>
     <v-data-table-server
       :headers="headers"
-      :items="updateMediates"
+      :items="categories"
       :items-length="totalSize"
       :loading="false"
       :items-per-page="perPageSize"
@@ -34,46 +39,54 @@
       <template v-slot:[`item.number`]="{ item }">
         {{ (currentPage - 1) * perPageSize + item.index + 1 }}
       </template>
-      <template v-slot:[`item.productTitle`]="{ item }">
-        <v-btn
-          variant="text"
-          color="info"
-          class="text-decoration-underline"
-          @click="() => $router.push(`/product/${item.columns.id}`)"
-          >{{ item.columns.productTitle }}</v-btn
-        >
-      </template>
       <template v-slot:[`item.details`]="{ item }">
         <manage-button
           button-text="상세보기"
-          :handle-click="() => $router.push(`/mediate/${item.columns.id}`)"
+          :handle-click="() => $router.push(`/product/${item.columns.id}`)"
         />
       </template>
       <template v-slot:[`item.delete`]="{ item }">
         <manage-button
           button-text="삭제"
-          :handle-click="() => handleDeleteMediate(item.columns.id)"
+          :handle-click="() => handleDeleteCategory(item.columns.id)"
         />
       </template>
-      <template v-slot:[`item.complete`]="{ item }">
-        <v-checkbox-btn v-model="item.complete" disabled></v-checkbox-btn>
+      <template v-slot:[`item.update`]="{ item }">
+        <manage-button
+          button-text="수정"
+          :handle-click="
+            () => handleUpdateCategory(item.columns.id, item.columns.name)
+          "
+        />
       </template>
     </v-data-table-server>
+    <category-update-modal
+      v-model="showUpdateModal"
+      :name="categoryName"
+      :id="categoryId"
+      @handle-cancle-modal="showUpdateModal = !showUpdateModal"
+    />
+    <category-create-modal
+      v-model="showCreateModal"
+      @handle-cancle-modal="showCreateModal = !showCreateModal"
+    />
   </section>
 </template>
 
 <script setup>
 import { ref, watch, onMounted } from "vue";
-import { getApi, deleteApi } from "@/api/modules";
+import { getApi, deleteApi, patchApi } from "@/api/modules";
 import { useRouter, useRoute } from "vue-router";
 import CommonTitle from "@/components/Title/CommonTitle.vue";
 import ManageButton from "@/components/Button/ManageButton.vue";
+import CategoryUpdateModal from "@/components/Modal/CategoryUpdateModal.vue";
+import CategoryCreateModal from "@/components/Modal/CategoryCreateModal.vue";
 
 const router = useRouter();
 const route = useRoute();
 const search = ref("");
 const currentPage = ref(1);
-const orderBy = ref("createDate,desc");
+const orderBy = ref("id,asc");
 
 const headers = ref([
   {
@@ -89,54 +102,43 @@ const headers = ref([
     key: "id",
   },
   {
-    title: "신고제목",
+    title: "카테고리명",
     align: "start",
     sortable: true,
-    key: "title",
+    key: "name",
   },
-  {
-    title: "상품명",
-    align: "start",
-    sortable: false,
-    key: "productTitle",
-  },
-  { title: "카테고리", align: "start", sortable: false, key: "categoryName" },
-  { title: "신고자", align: "start", sortable: false, key: "reporterLoginId" },
-  { title: "등록날짜", align: "start", sortable: true, key: "createDate" },
-  { title: "상세보기", align: "start", sortable: false, key: "details" },
+  { title: "수정", align: "start", sortable: false, key: "update" },
   { title: "삭제", align: "start", sortable: false, key: "delete" },
-  { title: "처리여부", align: "start", sortable: false, key: "complete" },
 ]);
-const mediates = ref([]);
-const updateMediates = ref([]);
+const categories = ref([]);
 const perPageSize = ref(10);
 const totalSize = ref(0);
+const showUpdateModal = ref(false);
+const categoryId = ref(0);
+const categoryName = ref("");
+const showCreateModal = ref(false);
 
-const handleDeleteMediate = (id) => {
+const handleDeleteCategory = async (id) => {
   try {
-    const response = deleteApi({
-      url: `/api/reports/${id}`,
+    const response = await deleteApi({
+      url: `/api/categories/${id}`,
     });
     router.go(0);
   } catch (error) {
-    console.error(error);
+    const code = error.response.status;
+    const msg = error.response.data.message;
+    alert(msg);
   }
 };
-const handleGetMediates = async () => {
+const handleGetCategories = async () => {
   try {
     const response = await getApi({
-      url: `/api/mediates?size=${perPageSize.value}&page=${
+      url: `/api/categories?size=${perPageSize.value}&page=${
         currentPage.value - 1
       }&sort=${orderBy.value}&searchWord=${search.value || ""}`,
     });
     totalSize.value = response.totalCount;
-    mediates.value = response.responseList;
-    updateMediates.value = mediates.value.map((mediate) => {
-      return {
-        ...mediate,
-        complete: mediate.status === "REPORT_CONFIRM",
-      };
-    });
+    categories.value = response.responseList;
   } catch (error) {
     console.error(error);
   }
@@ -145,17 +147,26 @@ const handleSort = (sort) => {
   if (sort.length !== 0) {
     orderBy.value = `${sort[0].key},${sort[0].order}`;
   } else {
-    orderBy.value = "createDate,desc";
+    orderBy.value = "id,asc";
   }
+};
+const handleUpdateCategory = (id, name) => {
+  categoryId.value = id;
+  categoryName.value = name;
+  showUpdateModal.value = true;
 };
 
 onMounted(async () => {
-  await handleGetMediates();
+  await handleGetCategories();
 });
 
 watch([perPageSize, currentPage, orderBy], async () => {
-  await handleGetMediates();
+  await handleGetCategories();
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.regist {
+  margin: 30px 0;
+}
+</style>
