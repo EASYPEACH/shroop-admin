@@ -51,12 +51,13 @@ const visible = ref(false);
 const id = ref("");
 const password = ref("");
 const isValid = ref(false);
+const authResult = ref(true);
 
 // 로그인 핸들러
 const handleSubmitLogin = async () => {
   try {
     await postApi({
-      url: "/api/auth/sign-in",
+      url: "/api/auth/login",
       data: {
         loginId: id.value,
         password: password.value,
@@ -64,7 +65,9 @@ const handleSubmitLogin = async () => {
     });
     router.push("/");
   } catch (error) {
-    console.error(error);
+    if (error.response.status === 400 || error.response.status === 403) {
+      authResult.value = false;
+    }
   }
 };
 </script>

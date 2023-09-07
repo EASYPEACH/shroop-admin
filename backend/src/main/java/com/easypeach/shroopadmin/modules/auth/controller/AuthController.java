@@ -34,7 +34,6 @@ public class AuthController {
 
 	@GetMapping("/")
 	public ResponseEntity<Boolean> checkLogin(@AuthenticationPrincipal String loginId){
-		System.out.println(loginId);
 		Boolean isLogin = memberService.checkLogin(loginId);
 		return ResponseEntity.ok().body(isLogin);
 	}
