@@ -27,13 +27,21 @@ public class ExceptionControllerAdvice {
 	}
 
 	@ExceptionHandler({
-		NotAuthrizedUserException.class,
 		InvalidTokenException.class
 	})
 	public ResponseEntity<ErrorResponse> handleNotExistException(final RuntimeException e) {
 		String errorMessage = e.getMessage();
 		ErrorResponse errorResponse = new ErrorResponse(errorMessage);
 		return ResponseEntity.status(404).body(errorResponse);
+	}
+
+	@ExceptionHandler({
+		NotAuthrizedUserException.class,
+	})
+	public ResponseEntity<ErrorResponse> handleAuthorizationExceoption(final RuntimeException e) {
+		String errorMessage = e.getMessage();
+		ErrorResponse errorResponse = new ErrorResponse(errorMessage);
+		return ResponseEntity.status(403).body(errorResponse);
 	}
 
 	@ExceptionHandler({

@@ -11,6 +11,7 @@ import com.easypeach.shroopadmin.modules.auth.exception.NotAuthrizedUserExceptio
 import com.easypeach.shroopadmin.modules.member.domain.Role;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -26,7 +27,7 @@ public class JwtProvider {
 	private byte[] secret;
 	private Key key;
 	@Value("${spring.jwt.access-token.exp}")
-	private String expireDate;
+	private Long expireMinute;
 
 	public JwtProvider(@Value("${spring.jwt.secret}") String secret) {
 		this.secret = secret.getBytes();
@@ -51,28 +52,30 @@ public class JwtProvider {
 			.compact();
 	}
 
-	public Claims getClaims(String token) {
-		return Jwts.parserBuilder()
-			.setSigningKey(key)
-			.build()
-			.parseClaimsJws(token)
-			.getBody();
-	}
-
-	public boolean validateToken(String accessToken) {
+	public void validateToken(String accessToken) {
 		try {
 			Jws<Claims> claimsJws = Jwts.parser()
 				.setSigningKey(key)
 				.parseClaimsJws(accessToken);
-			return !claimsJws.getBody().getExpiration().before(new Date());
+		}catch (ExpiredJwtException e){
+			throw new NotAuthrizedUserException("로그인이 필요합니다");
 		} catch (JwtException | IllegalArgumentException e) {
 			throw new InvalidTokenException("유효하지 않는 토큰 입니다");
 		}
 	}
 
 	public Date getExpireDateAccessToken() {
-		long expireTime = 1000 * 60 * 60;
+		long expireTime = 1000 * 60 * expireMinute;
 		return new Date(System.currentTimeMillis() + expireTime);
+	}
+
+	public String getPayload(final String token) {
+		return Jwts.parserBuilder()
+			.setSigningKey(key)
+			.build()
+			.parseClaimsJws(token)
+			.getBody()
+			.getSubject();
 	}
 
 }

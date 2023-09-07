@@ -1,11 +1,14 @@
 package com.easypeach.shroopadmin.modules.member.service;
 
+import java.security.Principal;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.easypeach.shroopadmin.modules.auth.exception.NotAuthrizedUserException;
 import com.easypeach.shroopadmin.modules.auth.service.JwtProvider;
 import com.easypeach.shroopadmin.modules.member.domain.Member;
 import com.easypeach.shroopadmin.modules.member.domain.MemberRepository;
@@ -17,10 +20,12 @@ import com.easypeach.shroopadmin.modules.secession.BlackMember;
 import com.easypeach.shroopadmin.modules.secession.BlackMemberRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Transactional
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class MemberService {
 	private final MemberRepository memberRepository;
 	private final BlackMemberRepository blackMemberRepository;
@@ -81,4 +86,11 @@ public class MemberService {
 		return jwtProvider.createAccessToken(member.getLoginId(), member.getRole());
 	}
 
+	public Boolean checkLogin(String loginId) {
+		if (loginId == null){
+			System.out.println("탓니?");
+			throw new NotAuthrizedUserException("로그인이 필요합니다.");
+		}
+		return true;
+	}
 }
