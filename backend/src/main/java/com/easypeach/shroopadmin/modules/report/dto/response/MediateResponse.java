@@ -20,6 +20,10 @@ public class MediateResponse {
 
 	private String reporterLoginId;
 
+	private Long reporteeId;
+
+	private String reporteeLoginId;
+
 	private Long sellerId;
 
 	private Long productId;
@@ -45,8 +49,10 @@ public class MediateResponse {
 
 	public MediateResponse(final Report report, final List<ReportImgResponse> imgList) {
 		this.id = report.getId();
-		this.reporterId = report.getMember().getId();
-		this.reporterLoginId = report.getMember().getLoginId();
+		this.reporterId = report.getReporter().getId();
+		this.reporterLoginId = report.getReporter().getLoginId();
+		this.reporteeId = report.getReportee().getId();
+		this.reporteeLoginId = report.getReportee().getLoginId();
 		this.sellerId = report.getProduct().getSeller().getId();
 		this.productId = report.getProduct().getId();
 		this.productTitle = report.getProduct().getTitle();
@@ -62,8 +68,10 @@ public class MediateResponse {
 
 	public MediateResponse(final Report report) {
 		this.id = report.getId();
-		this.reporterId = report.getMember().getId();
-		this.reporterLoginId = report.getMember().getLoginId();
+		this.reporterId = report.getReporter().getId();
+		this.reporterLoginId = report.getReporter().getLoginId();
+		this.reporteeId = report.getReportee().getId();
+		this.reporteeLoginId = report.getReportee().getLoginId();
 		this.sellerId = report.getProduct().getSeller().getId();
 		this.productId = report.getProduct().getId();
 		this.productTitle = report.getProduct().getTitle();
