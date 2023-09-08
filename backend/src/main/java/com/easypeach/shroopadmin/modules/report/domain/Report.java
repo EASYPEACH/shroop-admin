@@ -14,8 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -37,9 +35,12 @@ public class Report {
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id", nullable = false)
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	private Member member;
+	@JoinColumn(name = "reporter_id", nullable = false)
+	private Member reporter;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "reportee_id", nullable = false)
+	private Member reportee;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id", nullable = false)
@@ -62,31 +63,8 @@ public class Report {
 	@CreatedDate
 	private LocalDateTime createDate;
 
-	public static Report createReport(
-		final Member member,
-		final Product product,
-		final String title,
-		final String content,
-		final boolean isMediate,
-		final ReportStatus status
-	) {
-		Report report = new Report();
-		report.member = member;
-		report.product = product;
-		report.title = title;
-		report.content = content;
-		report.isMediate = isMediate;
-		report.status = status;
-
-		return report;
-	}
-
 	public void updateStatus(final ReportStatus reportStatus) {
 		this.status = reportStatus;
-	}
-
-	public static Report forTestCodeReport() {
-		return new Report();
 	}
 
 }
