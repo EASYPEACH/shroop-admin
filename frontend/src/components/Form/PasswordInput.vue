@@ -8,7 +8,7 @@
     <v-text-field
       :append-inner-icon="visible ? 'mdi-eye' : 'mdi-eye-off'"
       :type="visible ? 'text' : 'password'"
-      :value="modelValue"
+      :model-value="modelValue"
       density="compact"
       placeholder="비밀번호를 입력해주세요"
       prepend-inner-icon="mdi-lock-outline"
@@ -23,7 +23,6 @@
 defineProps({
   modelValue: String,
   visible: Boolean,
-  isNeedSearchState: Boolean,
 });
 defineEmits(["update:modelValue", "toggle-visible"]);
 </script>

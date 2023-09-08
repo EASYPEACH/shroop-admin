@@ -1,6 +1,6 @@
 <template>
   <section>
-    <common-title title="사용자관리" />
+    <main-title title="사용자관리" />
     <v-text-field
       name="search"
       append-inner-icon="mdi-magnify"
@@ -59,7 +59,7 @@
 <script setup>
 import { onBeforeMount, ref } from "vue";
 import { getApi, patchApi, deleteApi } from "@/api/modules";
-import CommonTitle from "@/components/Title/CommonTitle.vue";
+import { MainTitle } from "@/components/Title";
 import ManageButton from "@/components/Button/ManageButton.vue";
 
 const headers = ref([

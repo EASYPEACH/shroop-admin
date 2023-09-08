@@ -1,7 +1,7 @@
 <template>
   <section>
     <back-button />
-    <common-title title="사용자 정보" />
+    <main-title title="사용자 정보" />
     <section class="profileSection">
       <img :src="user.profileImg" alt="profileImg" />
       <ul class="userInfo">
@@ -40,7 +40,7 @@
       </ul>
     </section>
     <v-divider></v-divider>
-    <common-title title="사용자 로그" />
+    <main-title title="사용자 로그" />
     <v-data-table-server
       :headers="headers"
       :items="userLogs"
@@ -71,7 +71,7 @@ import { onBeforeMount, ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { getApi } from "@/api/modules";
 import BackButton from "@/components/Button/BackButton.vue";
-import CommonTitle from "@/components/Title/CommonTitle.vue";
+import { MainTitle } from "@/components/Title";
 
 const user = ref({
   id: 1,

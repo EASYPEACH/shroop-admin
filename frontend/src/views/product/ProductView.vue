@@ -1,6 +1,6 @@
 <template>
   <section>
-    <common-title title="상품관리" />
+    <main-title title="상품관리" />
     <manage-button
       button-text="상품등록"
       class="regist"
@@ -102,7 +102,7 @@
 import { onMounted, ref, watch } from "vue";
 import { getApi, deleteApi } from "@/api/modules";
 import { TRANSACTION_STATUS } from "@/consts/status";
-import CommonTitle from "@/components/Title/CommonTitle.vue";
+import { MainTitle } from "@/components/Title";
 import ManageButton from "@/components/Button/ManageButton.vue";
 import PlainModal from "@/components/Modal/PlainModal.vue";
 import { useRouter } from "vue-router";

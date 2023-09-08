@@ -3,8 +3,7 @@ import "vuetify/styles";
 import { VDataTable, VDataTableServer } from "vuetify/labs/VDataTable";
 
 import { createVuetify } from "vuetify";
-import "@/styles/main.scss";
-import "@/styles/global.style.css";
+
 import {
   Chart as ChartJS,
   CategoryScale,
