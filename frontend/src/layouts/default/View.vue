@@ -1,9 +1,6 @@
 <template>
   <v-main>
     <navigation-bar v-if="route.path.split('/')[1] !== 'login'" />
-    <section>
-      <router-view />
-    </section>
     <v-btn
       variant="tonal"
       @click="handleLogout"
@@ -11,6 +8,9 @@
     >
       로그아웃
     </v-btn>
+    <section>
+      <router-view />
+    </section>
   </v-main>
 </template>
 
@@ -37,13 +37,16 @@ const handleLogout = async () => {
 <style lang="scss" scoped>
 .v-main {
   display: flex;
+
   section {
     padding: 20px;
     width: 100%;
     height: 100%;
   }
   .v-btn {
-    margin: 30px 70px 0 0;
+    position: fixed;
+    top: 20px;
+    right: 20px;
   }
 }
 </style>

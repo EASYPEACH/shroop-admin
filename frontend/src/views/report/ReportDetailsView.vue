@@ -1,7 +1,7 @@
 <template>
   <section>
     <back-button />
-    <common-title title="신고 접수 상세" />
+    <main-title title="신고 접수 상세" />
     <ul>
       <li>
         <h2>제목</h2>
@@ -60,7 +60,7 @@ import { ref, onBeforeMount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getApi, patchApi } from "@/api/modules";
 import BackButton from "@/components/Button/BackButton.vue";
-import CommonTitle from "@/components/Title/CommonTitle.vue";
+import { MainTitle } from "@/components/Title";
 import ManageButton from "@/components/Button/ManageButton.vue";
 import ImageModal from "@/components/ImageModal.vue";
 

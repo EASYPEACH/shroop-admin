@@ -1,6 +1,6 @@
 <template>
   <div>
-    <common-title title="로그인" />
+    <main-title title="로그인" />
     <v-card
       class="mx-auto pa-12 pb-8"
       max-width="448"
@@ -18,7 +18,6 @@
           :visible="visible"
           @toggle-visible="visible = !visible"
           v-model="password"
-          isNeedSearchState
         />
         <v-btn
           block
@@ -42,9 +41,8 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { postApi } from "@/api/modules";
-import CommonTitle from "@/components/Title/CommonTitle.vue";
-import CustomTextInput from "@/components/Form/CustomTextInput.vue";
-import PasswordInput from "@/components/Form/PasswordInput.vue";
+import { CustomTextInput, PasswordInput } from "@/components/Form";
+import { MainTitle } from "@/components/Title";
 
 const router = useRouter();
 const visible = ref(false);

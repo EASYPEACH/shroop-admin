@@ -1,6 +1,6 @@
 <template>
   <section>
-    <common-title title="카테고리관리" />
+    <main-title title="카테고리관리" />
     <manage-button
       button-text="카테고리등록"
       class="regist"
@@ -77,7 +77,7 @@
 import { ref, watch, onMounted } from "vue";
 import { getApi, deleteApi, patchApi } from "@/api/modules";
 import { useRouter, useRoute } from "vue-router";
-import CommonTitle from "@/components/Title/CommonTitle.vue";
+import { MainTitle } from "@/components/Title";
 import ManageButton from "@/components/Button/ManageButton.vue";
 import CategoryUpdateModal from "@/components/Modal/CategoryUpdateModal.vue";
 import CategoryCreateModal from "@/components/Modal/CategoryCreateModal.vue";

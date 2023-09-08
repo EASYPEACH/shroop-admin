@@ -1,6 +1,6 @@
 <template>
   <section>
-    <common-title title="신고관리" />
+    <main-title title="신고관리" />
     <v-text-field
       v-model="search"
       append-inner-icon="mdi-magnify"
@@ -69,7 +69,7 @@
 import { ref, watch, onMounted } from "vue";
 import { getApi, deleteApi } from "@/api/modules";
 import { useRouter, useRoute } from "vue-router";
-import CommonTitle from "@/components/Title/CommonTitle.vue";
+import { MainTitle } from "@/components/Title";
 import ManageButton from "@/components/Button/ManageButton.vue";
 
 const router = useRouter();

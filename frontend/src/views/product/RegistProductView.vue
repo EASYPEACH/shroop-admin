@@ -154,7 +154,7 @@ import { PRODUCT_GRADE, PRODUCT_GRADE_EN } from "@/consts/productGrade.js";
 import { multipartPostApi, multipartPatchApi, getApi } from "@/api/modules";
 
 import CustomTextInput from "@/components/Form/CustomTextInput.vue";
-import CommonTitle from "@/components/Title/CommonTitle.vue";
+import { MainTitle } from "@/components/Title";
 import ProductTitle from "@/components/Title/ProductTitle.vue";
 import ImageAttach from "@/components/ImageAttach.vue";
 import CustomTextArea from "@/components/Form/CustomTextArea.vue";

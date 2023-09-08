@@ -28,67 +28,67 @@ const routes = [
         component: HomeView,
       },
       {
-        path: "/login",
+        path: "login",
         name: "Login",
         component: Login,
       },
       {
-        path: "/account",
+        path: "account",
         name: "Account",
         component: AccountView,
       },
       {
-        path: "/user/:id(\\d+)",
+        path: "user/:id(\\d+)",
         name: "UserDetails",
         component: UserDetailsView,
       },
       {
-        path: "/user/edit/:id(\\d+)",
+        path: "user/edit/:id(\\d+)",
         name: "UserEdit",
         component: UserEditView,
       },
       {
-        path: "/mediate",
+        path: "mediate",
         name: "Mediate",
         component: MediateView,
       },
       {
-        path: "/mediate/:id(\\d+)",
+        path: "mediate/:id(\\d+)",
         name: "MediateDetails",
         component: MediateDetailsView,
       },
       {
-        path: "/product",
+        path: "product",
         name: "Product",
         component: ProductView,
       },
       {
-        path: "/product/:id(\\d+)",
+        path: "product/:id(\\d+)",
         name: "ProductDetails",
         component: ProductDetailsView,
       },
       {
-        path: "/category",
+        path: "category",
         name: "Category",
         component: CategoryView,
       },
       {
-        path: "/regist",
+        path: "regist",
         name: "ProductRegist",
         component: RegistProductView,
       },
       {
-        path: "/edit/:id(\\d+)",
+        path: "edit/:id(\\d+)",
         name: "ProductEdit",
         component: RegistProductView,
       },
       {
-        path: "/report",
+        path: "report",
         name: "Report",
         component: ReportView,
       },
       {
-        path: "/report/:id(\\d+)",
+        path: "report/:id(\\d+)",
         name: "ReportDetails",
         component: ReportDetailsView,
       },
@@ -108,7 +108,6 @@ router.beforeEach(async (to) => {
       const response = await getApi({
         url: "/api/auth/checkLogin",
       });
-      console.log(response);
       loginCheckStore.setIsLogin(response);
     } catch (error) {
       if (error.response.status == 403) {
