@@ -42,7 +42,7 @@ public class AuthController {
 	public ResponseEntity<BasicResponse> signIn(@RequestBody MemberSignInRequest memberSignInRequest, final HttpServletResponse httpServletResponse) {
 		String accessToken = memberService.login(memberSignInRequest);
 		settingAccessTokenCookie(accessToken, httpServletResponse);
-		return ResponseEntity.ok().body(new BasicResponse(accessToken));
+		return ResponseEntity.ok().body(new BasicResponse("로그인에 성공했습니다."));
 	}
 
 	@GetMapping("/logout")
