@@ -2,6 +2,7 @@ package com.easypeach.shroopadmin.modules.report.dto.response;
 
 import java.time.LocalDateTime;
 
+import com.easypeach.shroopadmin.modules.member.domain.Role;
 import com.easypeach.shroopadmin.modules.report.domain.Report;
 import com.easypeach.shroopadmin.modules.report.domain.ReportStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -20,6 +21,8 @@ public class ReportResponse {
 	private String reporterLoginId;
 
 	private Long reporteeId;
+
+	private Role reporteeStatus;
 
 	private String reporteeLoginId;
 
@@ -49,6 +52,7 @@ public class ReportResponse {
 		this.reporterId = report.getReporter().getId();
 		this.reporterLoginId = report.getReporter().getLoginId();
 		this.reporteeId = report.getReportee().getId();
+		this.reporteeStatus = report.getReportee().getRole();
 		this.reporteeLoginId = report.getReportee().getLoginId();
 		this.sellerId = report.getProduct().getSeller().getId();
 		this.productId = report.getProduct().getId();
