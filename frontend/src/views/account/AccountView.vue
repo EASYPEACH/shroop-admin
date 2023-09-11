@@ -2,9 +2,11 @@
   <section>
     <main-title title="사용자관리" />
     <v-text-field
+      v-model="search"
       name="search"
       append-inner-icon="mdi-magnify"
-      @click:append-inner="() => console.log('a')"
+      @click:append-inner="handleMemberList"
+      @keypress="(e) => e.keyCode === 13 && handleMemberList()"
     ></v-text-field>
     <v-data-table
       :headers="headers"
@@ -108,6 +110,7 @@ const users = ref([
     createDate: "",
   },
 ]);
+const search = ref("");
 const loading = ref(false);
 const currentPage = ref(1);
 const isValid = ref(false);
@@ -115,9 +118,10 @@ const handleMemberList = async () => {
   loading.value = true;
   try {
     const page = await getApi({
-      url: `/api/members?page=${currentPage.value - 1}&size=15&sort=id,desc `,
+      url: `/api/members?page=${
+        currentPage.value - 1
+      }&size=15&sort=id,desc&searchWord=${search.value || ""} `,
     });
-    console.log(page.content);
     users.value = page.content;
     loading.value = false;
   } catch (error) {
