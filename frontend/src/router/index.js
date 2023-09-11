@@ -13,6 +13,7 @@ import ProductDetailsView from "@/views/product/ProductDetailsView.vue";
 import RegistProductView from "@/views/product/RegistProductView.vue";
 import ReportView from "@/views/report/ReportView.vue";
 import ReportDetailsView from "@/views/report/ReportDetailsView.vue";
+import TransactionView from "@/views/transaction/TransactionView.vue";
 import CategoryView from "@/views/catogory/CategoryView.vue";
 import { getApi } from "@/api/modules";
 import { useCheckLogin } from "@/store/useCheckLogin";
@@ -91,6 +92,11 @@ const routes = [
         path: "report/:id(\\d+)",
         name: "ReportDetails",
         component: ReportDetailsView,
+      },
+      {
+        path: "transaction",
+        name: "Transaction",
+        component: TransactionView,
       },
     ],
   },

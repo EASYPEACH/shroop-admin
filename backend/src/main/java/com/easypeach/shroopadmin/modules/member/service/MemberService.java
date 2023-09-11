@@ -35,10 +35,10 @@ public class MemberService {
 	private final S3UploadService s3UploadService;
 
 	public Page<MemberInfo> getMemberList(final SearchRequest searchRequest, final Pageable pageable) {
-		// Page<Member> members = memberRepository.findAll(pageable);
-		Page<Member> members = memberRepository.findAll(searchRequest.getSearchWord(), pageable);
-		//Page로 되어 있는 엔티티 dto로 변경
 
+		Page<Member> members = memberRepository.findAll(searchRequest.getSearchWord(), pageable);
+
+		//Page로 되어 있는 엔티티 dto로 변경
 		Page<MemberInfo> dtoMembers = members.map(m -> new MemberInfo(
 			m.getId(),
 			m.getProfileImg(),
