@@ -63,6 +63,11 @@ const navigationList = [
     link: "category",
   },
   {
+    title: "거래관리",
+    icon: "mdi-handshake-outline",
+    link: "transaction",
+  },
+  {
     title: "신고관리",
     icon: "mdi-bug",
     link: "report",
