@@ -1,20 +1,10 @@
 <template>
   <v-card>
     <v-layout>
-      <v-navigation-drawer
-        v-model="drawer"
-        :rail="rail"
-        permanent
-        @click="rail = false"
-      >
+      <v-navigation-drawer v-model="drawer" permanent>
         <li>
           <img src="@/assets/logo-black.png" />
           <p>슈룹 관리자</p>
-          <v-btn
-            variant="text"
-            icon="mdi-chevron-left"
-            @click.stop="rail = !rail"
-          ></v-btn>
         </li>
 
         <v-divider></v-divider>
@@ -40,7 +30,6 @@ import { ref } from "vue";
 import { useRoute } from "vue-router";
 
 const drawer = ref(true);
-const rail = ref(false);
 const navigationList = [
   {
     title: "Home",
