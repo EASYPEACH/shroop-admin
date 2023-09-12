@@ -56,6 +56,11 @@
           >UID {{ item.columns.id }}</v-btn
         >
       </template>
+      <template v-slot:[`item.title`]="{ item }">
+        <p style="width: 100px; overflow: hidden; text-overflow: ellipsis">
+          {{ item.columns.title }}
+        </p>
+      </template>
       <template v-slot:[`item.details`]="{ item }">
         <manage-button
           button-text="상세보기"
