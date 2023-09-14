@@ -58,8 +58,14 @@ public class Transaction {
 	@Column(name = "buyer_phone_number", length = 255, nullable = false)
 	private String buyerPhoneNumber;
 
+	@Column(name = "buyer_postcode", length = 255, nullable = false)
+	private String buyerPostcode;
+
 	@Column(name = "buyer_location", length = 255, nullable = false)
 	private String buyerLocation;
+
+	@Column(name = "buyer_detail_location", length = 255, nullable = false)
+	private String buyerDetailLocation;
 
 	@Column(name = "create_date")
 	@CreatedDate
